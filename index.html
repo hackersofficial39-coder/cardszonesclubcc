@@ -3,31 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Card Zone Club - Portal</title>
+    <title>Card Zone Club - Secure Portal</title>
     <link rel="icon" type="image/jpeg" href="https://i.postimg.cc/kXy7XgXX/1794672862045.jpg">
     <link rel="shortcut icon" type="image/jpeg" href="https://i.postimg.cc/kXy7XgXX/1794672862045.jpg">
     <style>
         body { background-color: #0d1117; color: #c9d1d9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; }
+        
         header { background: #161b22; border-bottom: 1px solid #30363d; padding: 12px 20px; display: flex; align-items: center; }
         .logo-container { display: flex; align-items: center; gap: 12px; }
         .logo-img { width: 38px; height: 38px; border-radius: 6px; object-fit: cover; border: 1px solid #30363d; background: #0d1117; }
         .logo-text { font-size: 16px; font-weight: bold; color: #33ff33; letter-spacing: 1px; text-transform: uppercase; }
+
         .main-content { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; }
-        .box { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 25px; width: 100%; max-width: 400px; box-sizing: border-box; box-shadow: 0 4px 20px rgba(0,0,0,0.6); }
-        .tabs { display: flex; margin-bottom: 20px; border-bottom: 1px solid #30363d; }
-        .tab { flex: 1; text-align: center; padding: 10px; cursor: pointer; font-weight: bold; color: #8b949e; border-bottom: 2px solid transparent; }
+        
+        .box { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 30px; width: 100%; max-width: 400px; box-sizing: border-box; box-shadow: 0 8px 24px rgba(0,0,0,0.6); }
+        
+        .tabs { display: flex; margin-bottom: 25px; border-bottom: 1px solid #30363d; }
+        .tab { flex: 1; text-align: center; padding: 10px; cursor: pointer; font-weight: bold; color: #8b949e; border-bottom: 2px solid transparent; font-size: 14px; }
         .tab.active { color: #33ff33; border-bottom-color: #33ff33; }
+        
         .form-section { display: none; }
         .form-section.active { display: block; }
-        input { width: 100%; padding: 12px 15px; margin: 10px 0; background: #0d1117; border: 1px solid #30363d; color: #fff; border-radius: 6px; font-size: 14px; box-sizing: border-box; }
-        input:focus { border-color: #33ff33; outline: none; }
-        .action-btn { display: block; width: 100%; padding: 12px; text-align: center; background: #238636; color: white; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; margin-top: 10px; font-size: 15px; box-sizing: border-box; }
+        
+        label { font-size: 12px; color: #8b949e; font-weight: bold; display: block; margin-bottom: 5px; }
+        input { width: 100%; padding: 12px 15px; margin-bottom: 15px; background: #0d1117; border: 1px solid #30363d; color: #fff; border-radius: 6px; font-size: 14px; box-sizing: border-box; }
+        input:focus { border-color: #33ff33; outline: none; box-shadow: 0 0 0 3px rgba(51, 255, 51, 0.1); }
+        
+        .action-btn { display: block; width: 100%; padding: 12px; text-align: center; background: #238636; color: white; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; font-size: 15px; box-sizing: border-box; transition: background 0.2s; }
         .action-btn:hover { background: #2ea043; }
-        .notice-text { font-size: 12px; color: #8b949e; text-align: center; margin-top: 15px; }
+        
+        .register-btn { background: #1f6feb; }
+        .register-btn:hover { background: #388bfd; }
+
+        /* Bottom Row for Forgot Password alignment */
+        .form-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 13px; }
+        .forgot-link { color: #58a6ff; text-decoration: none; }
+        .forgot-link:hover { text-decoration: underline; }
+
+        .notice-text { font-size: 12px; color: #8b949e; text-align: center; margin-top: 15px; line-height: 1.4; }
         .notice-text a { color: #58a6ff; text-decoration: none; }
     </style>
 </head>
 <body>
+
     <header>
         <div class="logo-container">
             <img src="https://i.postimg.cc/kXy7XgXX/1794672862045.jpg" alt="Logo" class="logo-img">
@@ -38,28 +56,41 @@
     <div class="main-content">
         <div class="box">
             <div class="tabs">
-                <div class="tab active" onclick="switchTab('login')">Login</div>
-                <div class="tab" onclick="switchTab('register')">Register</div>
+                <div class="tab active" onclick="switchTab('login')">Vendor Login</div>
+                <div class="tab" onclick="switchTab('register')">New Registration</div>
             </div>
 
             <!-- Login Form -->
             <div id="login-form" class="form-section active">
                 <form action="dashboard.html" method="GET">
-                    <input type="text" placeholder="Your Username" required>
-                    <input type="password" placeholder="Your Access Key" required>
+                    <label>Username / Vendor ID</label>
+                    <input type="text" placeholder="Enter your username" required>
+                    
+                    <label>Access Key / Password</label>
+                    <input type="password" placeholder="Enter your access key" required>
+                    
                     <button type="submit" class="action-btn">Authenticate & Enter</button>
+                    
+                    <!-- Left aligned Forgot Password link -->
+                    <div class="form-footer">
+                        <a href="#" class="forgot-link" onclick="forgotPasswordAction(); return false;">Forgot Password?</a>
+                    </div>
                 </form>
             </div>
 
             <!-- Register Form -->
             <div id="register-form" class="form-section">
                 <form action="deposit.html" method="GET">
-                    <input type="text" placeholder="Choose Username" required>
-                    <input type="password" placeholder="Create Access Key" required>
-                    <button type="submit" class="action-btn" style="background: #1f6feb;">Create Account & Deposit</button>
+                    <label>Choose Username</label>
+                    <input type="text" placeholder="Choose a unique username" required>
+                    
+                    <label>Create Access Key</label>
+                    <input type="password" placeholder="Create a strong password" required>
+                    
+                    <button type="submit" class="action-btn register-btn">Create Account & Proceed</button>
                 </form>
                 <div class="notice-text">
-                    New accounts require a mandatory <a href="deposit.html">$25 Activation Deposit</a>.
+                    New accounts require a mandatory <a href="deposit.html">$25 Activation Deposit</a> via TRC20 to prevent flash tokens.
                 </div>
             </div>
         </div>
@@ -75,6 +106,13 @@
             } else {
                 document.querySelectorAll('.tab')[1].classList.add('active');
                 document.getElementById('register-form').classList.add('active');
+            }
+        }
+
+        function forgotPasswordAction() {
+            let userEmail = prompt("Password Recovery: Please enter your registered email address to receive access credentials:");
+            if (userEmail) {
+                alert("If " + userEmail + " matches our records, password recovery instructions have been dispatched via support contact.");
             }
         }
     </script>
