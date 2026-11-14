@@ -3,30 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CARDS ZONE CLUB // SECURE GATEWAY</title>
+    <title>Card Zone Club - Portal</title>
+    <link rel="icon" type="image/jpeg" href="https://i.postimg.cc/kXy7XgXX/1794672862045.jpg">
+    <link rel="shortcut icon" type="image/jpeg" href="https://i.postimg.cc/kXy7XgXX/1794672862045.jpg">
     <style>
-        body { background-color: #030508; color: #c9d1d9; font-family: 'Courier New', Courier, monospace; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .box { background: #0b0f17; border: 1px solid #182232; padding: 25px; width: 100%; max-width: 400px; }
-        h1 { color: #00ff66; font-size: 1.1rem; text-align: center; margin-bottom: 15px; }
-        .group { margin-bottom: 12px; }
-        label { display: block; font-size: 0.75rem; color: #8b949e; margin-bottom: 4px; text-transform: uppercase; }
-        input { width: 100%; background: #030508; border: 1px solid #182232; padding: 8px; color: #00ff66; box-sizing: border-box; }
-        .btn { width: 100%; background: #00ff66; color: #030508; border: none; padding: 10px; font-weight: bold; cursor: pointer; margin-top: 10px; text-transform: uppercase; }
-        .notice { font-size: 0.72rem; color: #ff9999; background: #1a0f0f; border: 1px solid #ff4444; padding: 8px; margin-bottom: 12px; }
+        body { background-color: #0d1117; color: #c9d1d9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; }
+        header { background: #161b22; border-bottom: 1px solid #30363d; padding: 12px 20px; display: flex; align-items: center; }
+        .logo-container { display: flex; align-items: center; gap: 12px; }
+        .logo-img { width: 38px; height: 38px; border-radius: 6px; object-fit: cover; border: 1px solid #30363d; background: #0d1117; }
+        .logo-text { font-size: 16px; font-weight: bold; color: #33ff33; letter-spacing: 1px; text-transform: uppercase; }
+        .main-content { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .box { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 25px; width: 100%; max-width: 400px; box-sizing: border-box; box-shadow: 0 4px 20px rgba(0,0,0,0.6); }
+        .tabs { display: flex; margin-bottom: 20px; border-bottom: 1px solid #30363d; }
+        .tab { flex: 1; text-align: center; padding: 10px; cursor: pointer; font-weight: bold; color: #8b949e; border-bottom: 2px solid transparent; }
+        .tab.active { color: #33ff33; border-bottom-color: #33ff33; }
+        .form-section { display: none; }
+        .form-section.active { display: block; }
+        input { width: 100%; padding: 12px 15px; margin: 10px 0; background: #0d1117; border: 1px solid #30363d; color: #fff; border-radius: 6px; font-size: 14px; box-sizing: border-box; }
+        input:focus { border-color: #33ff33; outline: none; }
+        .action-btn { display: block; width: 100%; padding: 12px; text-align: center; background: #238636; color: white; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; margin-top: 10px; font-size: 15px; box-sizing: border-box; }
+        .action-btn:hover { background: #2ea043; }
+        .notice-text { font-size: 12px; color: #8b949e; text-align: center; margin-top: 15px; }
+        .notice-text a { color: #58a6ff; text-decoration: none; }
     </style>
 </head>
 <body>
-    <div class="box">
-        <h1>[ CARDS ZONE CLUB ]</h1>
-        <div class="notice">
-            <strong>OFFICIAL DOMAIN WARNING:</strong> Only use <strong>cardszonesclubcc.com</strong> or our verified secondary domain. Beware of phishing clones!
+    <header>
+        <div class="logo-container">
+            <img src="https://i.postimg.cc/kXy7XgXX/1794672862045.jpg" alt="Logo" class="logo-img">
+            <span class="logo-text">CARD ZONE CLUB</span>
         </div>
-        <form action="deposit.html" method="GET">
-            <div class="group"><label>Username / Handle</label><input type="text" required placeholder="Enter handle"></div>
-            <div class="group"><label>Secure Password</label><input type="password" required placeholder="••••••••"></div>
-            <div class="group"><label>Email (For Domain Change Alerts)</label><input type="email" required placeholder="protonmail@proton.me"></div>
-            <button type="submit" class="btn">Login (To Activation Deposit)</button>
-        </form>
+    </header>
+
+    <div class="main-content">
+        <div class="box">
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab('login')">Login</div>
+                <div class="tab" onclick="switchTab('register')">Register</div>
+            </div>
+
+            <!-- Login Form -->
+            <div id="login-form" class="form-section active">
+                <form action="dashboard.html" method="GET">
+                    <input type="text" placeholder="Your Username" required>
+                    <input type="password" placeholder="Your Access Key" required>
+                    <button type="submit" class="action-btn">Authenticate & Enter</button>
+                </form>
+            </div>
+
+            <!-- Register Form -->
+            <div id="register-form" class="form-section">
+                <form action="deposit.html" method="GET">
+                    <input type="text" placeholder="Choose Username" required>
+                    <input type="password" placeholder="Create Access Key" required>
+                    <button type="submit" class="action-btn" style="background: #1f6feb;">Create Account & Deposit</button>
+                </form>
+                <div class="notice-text">
+                    New accounts require a mandatory <a href="deposit.html">$25 Activation Deposit</a>.
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script>
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.form-section').forEach(f => f.classList.remove('active'));
+            if(tabName === 'login') {
+                document.querySelectorAll('.tab')[0].classList.add('active');
+                document.getElementById('login-form').classList.add('active');
+            } else {
+                document.querySelectorAll('.tab')[1].classList.add('active');
+                document.getElementById('register-form').classList.add('active');
+            }
+        }
+    </script>
 </body>
 </html>
