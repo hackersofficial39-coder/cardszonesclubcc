@@ -3,39 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CARDS ZONE CLUB // CATALOG</title>
+    <title>Card Zone Club - Vendor Marketplace</title>
+    <link rel="icon" type="image/jpeg" href="https://i.postimg.cc/kXy7XgXX/1794672862045.jpg">
+    <link rel="shortcut icon" type="image/jpeg" href="https://i.postimg.cc/kXy7XgXX/1794672862045.jpg">
     <style>
-        body { background-color: #030508; color: #c9d1d9; font-family: 'Courier New', Courier, monospace; padding: 20px; }
-        .box { background: #0b0f17; border: 1px solid #182232; padding: 20px; max-width: 700px; margin: auto; }
-        h1 { color: #00ff66; font-size: 1.1rem; margin-bottom: 15px; }
-        table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
-        th, td { padding: 8px; border-bottom: 1px solid #182232; text-align: left; }
-        th { color: #8b949e; }
-        .nav { margin-bottom: 15px; font-size: 0.8rem; }
-        .nav a { color: #00ff66; text-decoration: none; margin-right: 10px; }
-        .warning-banner { background: #1a0f0f; border: 1px solid #ff4444; padding: 8px; font-size: 0.72rem; color: #ff9999; margin-bottom: 15px; }
+        body { background-color: #0d1117; color: #c9d1d9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 0; }
+        header { background: #161b22; border-bottom: 1px solid #30363d; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .logo-container { display: flex; align-items: center; gap: 12px; }
+        .logo-img { width: 38px; height: 38px; border-radius: 6px; object-fit: cover; border: 1px solid #30363d; background: #0d1117; }
+        .logo-text { font-size: 16px; font-weight: bold; color: #33ff33; letter-spacing: 1px; text-transform: uppercase; }
+        .nav-buttons a { background: #21262d; border: 1px solid #30363d; color: #c9d1d9; padding: 8px 15px; margin-left: 10px; text-decoration: none; border-radius: 6px; font-size: 14px; }
+        .nav-buttons a:hover { background: #30363d; }
+        .container { max-width: 900px; margin: 20px auto; padding: 0 15px; box-sizing: border-box; }
+        .search-box { width: 100%; padding: 12px 15px; background: #161b22; border: 1px solid #30363d; color: #fff; border-radius: 6px; font-size: 15px; margin-bottom: 15px; box-sizing: border-box; }
+        .search-box:focus { border-color: #33ff33; outline: none; }
+        .action-btn { display: block; width: 100%; padding: 12px; text-align: center; background: #238636; color: white; font-weight: bold; text-decoration: none; border-radius: 6px; margin-bottom: 10px; box-sizing: border-box; }
+        .action-btn:hover { background: #2ea043; }
+        .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 20px; margin-bottom: 15px; }
+        .card h3 { margin-top: 0; color: #58a6ff; }
+        .rules-link { color: #f85149; text-decoration: none; font-size: 13px; font-weight: bold; }
+        .rules-link:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
-    <div class="box">
-        <div class="nav">
-            <a href="catalog.html">Catalog</a> | 
-            <a href="deposit.html">Deposit</a> | 
-            <a href="seller.html">12 Vendors</a> | 
-            <a href="dashboard.html">History</a> | 
-            <a href="rules.html">Rules</a> | 
+
+    <header>
+        <div class="logo-container">
+            <img src="https://i.postimg.cc/kXy7XgXX/1794672862045.jpg" alt="Logo" class="logo-img">
+            <span class="logo-text">CARD ZONE CLUB</span>
+        </div>
+        <div class="nav-buttons">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="seller.html">Seller Portal</a>
+            <a href="deposit.html">Wallet</a>
             <a href="index.html">Logout</a>
         </div>
-        <div class="warning-banner">
-            <strong>OFFICIAL DOMAIN NOTICE:</strong> Ensure you are on <strong>cardszonesclubcc.com</strong> or our secondary official domain. All other mirrors are fake phishing sites.
+    </header>
+
+    <div class="container">
+        <input type="text" class="search-box" placeholder="Search the catalog (e.g. Banks, Fullz, CC)...">
+
+        <a href="deposit.html" class="action-btn">Add Funds / Standard Buyer Wallet</a>
+
+        <div class="card">
+            <h3>Bank + Octo Session & CC Drops</h3>
+            <p style="color: #8b949e; font-size: 14px;">High quality drops, manually checked with refund support.</p>
+            <p><a href="#" class="rules-link">READ RULES & REFUND POLICY</a></p>
+            <button style="background: #238636; color: white; border: none; padding: 10px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%;">Add to Cart</button>
         </div>
-        <h1>[ MARKET CATALOG // STOCK UNLOCKED ]</h1>
-        <table>
-            <tr><th>Category (Stock Freedom)</th><th>Target</th><th>Price</th></tr>
-            <tr><td>Fullz + SSN</td><td>US (Chase / BofA)</td><td>$50.00</td></tr>
-            <tr><td>Fresh Dump + PIN</td><td>DE (Sparkasse)</td><td>$90.00</td></tr>
-            <tr><td>Corporate Logs & Cookies</td><td>UK (Barclays)</td><td>$160.00</td></tr>
-        </table>
     </div>
+
 </body>
 </html>
