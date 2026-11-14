@@ -8,21 +8,29 @@
     <link rel="shortcut icon" type="image/jpeg" href="https://i.postimg.cc/kXy7XgXX/1794672862045.jpg">
     <style>
         body { background-color: #0d1117; color: #c9d1d9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 0; }
-        header { background: #161b22; border-bottom: 1px solid #30363d; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
-        .logo-container { display: flex; align-items: center; gap: 12px; }
-        .logo-img { width: 38px; height: 38px; border-radius: 6px; object-fit: cover; border: 1px solid #30363d; background: #0d1117; }
-        .logo-text { font-size: 16px; font-weight: bold; color: #33ff33; letter-spacing: 1px; text-transform: uppercase; }
-        .nav-buttons a { background: #21262d; border: 1px solid #30363d; color: #c9d1d9; padding: 8px 15px; margin-left: 10px; text-decoration: none; border-radius: 6px; font-size: 14px; }
-        .nav-buttons a:hover { background: #30363d; }
-        .container { max-width: 900px; margin: 20px auto; padding: 0 15px; box-sizing: border-box; }
-        .search-box { width: 100%; padding: 12px 15px; background: #161b22; border: 1px solid #30363d; color: #fff; border-radius: 6px; font-size: 15px; margin-bottom: 15px; box-sizing: border-box; }
+        
+        header { background: #161b22; border-bottom: 1px solid #30363d; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+        .logo-container { display: flex; align-items: center; gap: 10px; }
+        .logo-img { width: 36px; height: 36px; border-radius: 6px; object-fit: cover; border: 1px solid #30363d; background: #0d1117; }
+        .logo-text { font-size: 14px; font-weight: bold; color: #33ff33; letter-spacing: 0.5px; text-transform: uppercase; line-height: 1.1; }
+        
+        .header-nav { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+        .nav-box { background: #21262d; border: 1px solid #30363d; color: #c9d1d9; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size: 13px; display: flex; align-items: center; gap: 5px; }
+        .nav-box:hover { background: #30363d; }
+        .logout-box { background: #21262d; border: 1px solid #f85149; color: #f85149; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: bold; }
+        .logout-box:hover { background: #30363d; }
+
+        .container { max-width: 900px; margin: 15px auto; padding: 0 12px; box-sizing: border-box; }
+        .search-box { width: 100%; padding: 12px 15px; background: #161b22; border: 1px solid #30363d; color: #fff; border-radius: 6px; font-size: 14px; margin-bottom: 12px; box-sizing: border-box; }
         .search-box:focus { border-color: #33ff33; outline: none; }
-        .action-btn { display: block; width: 100%; padding: 12px; text-align: center; background: #238636; color: white; font-weight: bold; text-decoration: none; border-radius: 6px; margin-bottom: 10px; box-sizing: border-box; }
+
+        .action-btn { display: block; width: 100%; padding: 12px; text-align: center; background: #238636; color: white; font-weight: bold; text-decoration: none; border-radius: 6px; margin-bottom: 10px; box-sizing: border-box; font-size: 14px; }
         .action-btn:hover { background: #2ea043; }
-        .card { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 20px; margin-bottom: 15px; }
-        .card h3 { margin-top: 0; color: #58a6ff; }
-        .rules-link { color: #f85149; text-decoration: none; font-size: 13px; font-weight: bold; }
-        .rules-link:hover { text-decoration: underline; }
+        .secondary-btn { background: #1f6feb; }
+        .secondary-btn:hover { background: #388bfd; }
+
+        .empty-catalog { background: #161b22; border: 1px dashed #30363d; border-radius: 8px; padding: 30px; text-align: center; color: #8b949e; margin-top: 20px; }
+        .empty-catalog h3 { color: #58a6ff; margin-top: 0; }
     </style>
 </head>
 <body>
@@ -30,26 +38,24 @@
     <header>
         <div class="logo-container">
             <img src="https://i.postimg.cc/kXy7XgXX/1794672862045.jpg" alt="Logo" class="logo-img">
-            <span class="logo-text">CARD ZONE CLUB</span>
+            <span class="logo-text">CARD ZONE<br>CLUB</span>
         </div>
-        <div class="nav-buttons">
-            <a href="dashboard.html">Dashboard</a>
-            <a href="seller.html">Seller Portal</a>
-            <a href="deposit.html">Wallet</a>
-            <a href="index.html">Logout</a>
+        <div class="header-nav">
+            <a href="dashboard.html" class="nav-box">Dashboard</a>
+            <a href="deposit.html" class="nav-box">Cart</a>
+            <a href="index.html" class="logout-box">Logout</a>
         </div>
     </header>
 
     <div class="container">
-        <input type="text" class="search-box" placeholder="Search the catalog (e.g. Banks, Fullz, CC)...">
+        <input type="text" class="search-box" placeholder="Search the catalog...">
 
-        <a href="deposit.html" class="action-btn">Add Funds / Standard Buyer Wallet</a>
+        <a href="deposit.html" class="action-btn">Add Funds ($25 Activation)</a>
+        <a href="seller.html" class="action-btn secondary-btn">My Orders & Vendor Terminal</a>
 
-        <div class="card">
-            <h3>Bank + Octo Session & CC Drops</h3>
-            <p style="color: #8b949e; font-size: 14px;">High quality drops, manually checked with refund support.</p>
-            <p><a href="#" class="rules-link">READ RULES & REFUND POLICY</a></p>
-            <button style="background: #238636; color: white; border: none; padding: 10px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%;">Add to Cart</button>
+        <div class="empty-catalog">
+            <h3>Catalog Ready For Live Vendor Drops</h3>
+            <p>No sample items present. Authorized vendors can publish fresh drops directly through the Seller Portal, which will appear instantly here.</p>
         </div>
     </div>
 
