@@ -9,16 +9,20 @@
     <style>
         body { background-color: #0d1117; color: #c9d1d9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; }
         
+        /* Navigation / Brand Header */
         header { background: #161b22; border-bottom: 1px solid #30363d; padding: 12px 20px; display: flex; align-items: center; }
         .logo-container { display: flex; align-items: center; gap: 12px; }
         .logo-img { width: 38px; height: 38px; border-radius: 6px; object-fit: cover; border: 1px solid #30363d; background: #0d1117; }
         .logo-text { font-size: 16px; font-weight: bold; color: #33ff33; letter-spacing: 1px; text-transform: uppercase; }
 
+        /* Top Announcement Header Bar ($25 Deposit Notice) */
+        .top-announcement-bar { background: #1f6feb; color: #ffffff; padding: 10px 20px; text-align: center; font-size: 13px; font-weight: bold; border-bottom: 1px solid #388bfd; letter-spacing: 0.3px; }
+
         .main-content { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; }
         
-        .box { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 30px; width: 100%; max-width: 400px; box-sizing: border-box; box-shadow: 0 8px 24px rgba(0,0,0,0.6); }
+        .box { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 30px; width: 100%; max-width: 420px; box-sizing: border-box; box-shadow: 0 8px 24px rgba(0,0,0,0.6); }
         
-        .tabs { display: flex; margin-bottom: 25px; border-bottom: 1px solid #30363d; }
+        .tabs { display: flex; margin-bottom: 20px; border-bottom: 1px solid #30363d; }
         .tab { flex: 1; text-align: center; padding: 10px; cursor: pointer; font-weight: bold; color: #8b949e; border-bottom: 2px solid transparent; font-size: 14px; }
         .tab.active { color: #33ff33; border-bottom-color: #33ff33; }
         
@@ -29,23 +33,42 @@
         input { width: 100%; padding: 12px 15px; margin-bottom: 15px; background: #0d1117; border: 1px solid #30363d; color: #fff; border-radius: 6px; font-size: 14px; box-sizing: border-box; }
         input:focus { border-color: #33ff33; outline: none; box-shadow: 0 0 0 3px rgba(51, 255, 51, 0.1); }
         
+        /* Captcha Box Styling */
+        .captcha-container { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+        .captcha-box { background: #010409; border: 1px solid #30363d; color: #33ff33; padding: 10px 15px; font-family: monospace; font-size: 16px; font-weight: bold; letter-spacing: 3px; border-radius: 6px; user-select: none; text-align: center; flex: 1; }
+        .refresh-captcha { background: #21262d; border: 1px solid #30363d; color: #c9d1d9; padding: 10px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+        .refresh-captcha:hover { background: #30363d; }
+
         .action-btn { display: block; width: 100%; padding: 12px; text-align: center; background: #238636; color: white; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; font-size: 15px; box-sizing: border-box; transition: background 0.2s; }
         .action-btn:hover { background: #2ea043; }
         
         .register-btn { background: #1f6feb; }
         .register-btn:hover { background: #388bfd; }
 
-        /* Bottom Row for Forgot Password alignment */
         .form-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 13px; }
         .forgot-link { color: #58a6ff; text-decoration: none; }
         .forgot-link:hover { text-decoration: underline; }
 
-        .notice-text { font-size: 12px; color: #8b949e; text-align: center; margin-top: 15px; line-height: 1.4; }
-        .notice-text a { color: #58a6ff; text-decoration: none; }
+        /* Modal Overlay for 36-digit Key Display (Only for Registration) */
+        #key-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 9999; }
+        .modal-box { background: #161b22; border: 1px solid #33ff33; width: 90%; max-width: 450px; padding: 25px; border-radius: 8px; text-align: center; font-family: monospace; }
+        .modal-box h3 { color: #33ff33; margin-top: 0; }
+        .key-display { background: #0d1117; color: #58a6ff; padding: 12px; border: 1px dashed #30363d; font-size: 14px; word-break: break-all; margin: 15px 0; border-radius: 4px; }
     </style>
 </head>
 <body>
 
+    <!-- 36-Digit Generated Key Modal (Exclusive to Registration) -->
+    <div id="key-modal">
+        <div class="modal-box">
+            <h3>CRITICAL: SAVE YOUR ACCESS KEY</h3>
+            <p style="font-size: 12px; color: #8b949e; font-family: sans-serif;">Account registered successfully. This unique 36-digit access key will not be shown again. Save it securely to log in.</p>
+            <div class="key-display" id="generated-key-text"></div>
+            <button class="action-btn" onclick="proceedToDeposit()">Proceed to $25 Deposit Gateway</button>
+        </div>
+    </div>
+
+    <!-- Main Header Bar -->
     <header>
         <div class="logo-container">
             <img src="https://i.postimg.cc/kXy7XgXX/1794672862045.jpg" alt="Logo" class="logo-img">
@@ -53,25 +76,36 @@
         </div>
     </header>
 
+    <!-- Top Announcement Header for $25 Deposit Requirement -->
+    <div class="top-announcement-bar">
+        NOTICE: Account activation requires a mandatory minimum deposit of $25.00 USDT (TRC20).
+    </div>
+
     <div class="main-content">
         <div class="box">
             <div class="tabs">
-                <div class="tab active" onclick="switchTab('login')">Vendor Login</div>
+                <div class="tab active" onclick="switchTab('login')">Login</div>
                 <div class="tab" onclick="switchTab('register')">New Registration</div>
             </div>
 
             <!-- Login Form -->
             <div id="login-form" class="form-section active">
-                <form action="dashboard.html" method="GET">
-                    <label>Username / Vendor ID</label>
-                    <input type="text" placeholder="Enter your username" required>
+                <form onsubmit="handleLogin(event)">
+                    <label>Username</label>
+                    <input type="text" id="login-user" placeholder="Enter your username" required>
                     
-                    <label>Access Key / Password</label>
-                    <input type="password" placeholder="Enter your access key" required>
+                    <label>Password</label>
+                    <input type="password" id="login-pass" placeholder="Enter your password" required>
                     
+                    <label>Security Captcha</label>
+                    <div class="captcha-container">
+                        <div class="captcha-box" id="login-captcha-code">X8K9M</div>
+                        <button type="button" class="refresh-captcha" onclick="generateCaptcha('login')">↻</button>
+                    </div>
+                    <input type="text" id="login-captcha-input" placeholder="Enter captcha code" required>
+
                     <button type="submit" class="action-btn">Authenticate & Enter</button>
                     
-                    <!-- Left aligned Forgot Password link -->
                     <div class="form-footer">
                         <a href="#" class="forgot-link" onclick="forgotPasswordAction(); return false;">Forgot Password?</a>
                     </div>
@@ -80,23 +114,32 @@
 
             <!-- Register Form -->
             <div id="register-form" class="form-section">
-                <form action="deposit.html" method="GET">
+                <form onsubmit="handleRegister(event)">
                     <label>Choose Username</label>
-                    <input type="text" placeholder="Choose a unique username" required>
+                    <input type="text" id="reg-user" placeholder="Choose a unique username" required>
                     
-                    <label>Create Access Key</label>
-                    <input type="password" placeholder="Create a strong password" required>
+                    <label>Create Password</label>
+                    <input type="password" id="reg-pass" placeholder="Create a strong password" required>
                     
-                    <button type="submit" class="action-btn register-btn">Create Account & Proceed</button>
+                    <label>Security Captcha</label>
+                    <div class="captcha-container">
+                        <div class="captcha-box" id="reg-captcha-code">P4L2Q</div>
+                        <button type="button" class="refresh-captcha" onclick="generateCaptcha('reg')">↻</button>
+                    </div>
+                    <input type="text" id="reg-captcha-input" placeholder="Enter captcha code" required>
+
+                    <button type="submit" class="action-btn register-btn">Create Account & Generate Key</button>
                 </form>
-                <div class="notice-text">
-                    New accounts require a mandatory <a href="deposit.html">$25 Activation Deposit</a> via TRC20 to prevent flash tokens.
-                </div>
             </div>
         </div>
     </div>
 
     <script>
+        window.onload = function() {
+            generateCaptcha('login');
+            generateCaptcha('reg');
+        };
+
         function switchTab(tabName) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.form-section').forEach(f => f.classList.remove('active'));
@@ -109,10 +152,60 @@
             }
         }
 
+        function generateCaptcha(type) {
+            const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+            let code = "";
+            for (let i = 0; i < 5; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById(type + '-captcha-code').innerText = code;
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            let userCaptcha = document.getElementById('login-captcha-input').value.toUpperCase();
+            let actualCaptcha = document.getElementById('login-captcha-code').innerText;
+            if (userCaptcha !== actualCaptcha) {
+                alert("Invalid Captcha! Please try again.");
+                generateCaptcha('login');
+                return;
+            }
+            window.location.href = "dashboard.html";
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            let userCaptcha = document.getElementById('reg-captcha-input').value.toUpperCase();
+            let actualCaptcha = document.getElementById('reg-captcha-code').innerText;
+            if (userCaptcha !== actualCaptcha) {
+                alert("Invalid Captcha! Please try again.");
+                generateCaptcha('reg');
+                return;
+            }
+
+            // Generate 36-digit Key: starts with 3 alphabets (A-Z), followed by 33 mixed alphanumeric characters
+            const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const alphanum = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            let key = "";
+            for(let i=0; i<3; i++) {
+                key += letters.charAt(Math.floor(Math.random() * letters.length));
+            }
+            for(let i=0; i<33; i++) {
+                key += alphanum.charAt(Math.floor(Math.random() * alphanum.length));
+            }
+
+            document.getElementById('generated-key-text').innerText = key;
+            document.getElementById('key-modal').style.display = 'flex';
+        }
+
+        function proceedToDeposit() {
+            window.location.href = "deposit.html";
+        }
+
         function forgotPasswordAction() {
             let userEmail = prompt("Password Recovery: Please enter your registered email address to receive access credentials:");
             if (userEmail) {
-                alert("If " + userEmail + " matches our records, password recovery instructions have been dispatched via support contact.");
+                alert("If " + userEmail + " matches our records, recovery instructions have been sent via support.");
             }
         }
     </script>
