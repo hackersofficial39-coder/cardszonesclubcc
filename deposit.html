@@ -3,50 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CARDS ZONE CLUB // ESCROW & ACTIVATION VAULT</title>
+    <title>Card Zone Club - Account Activation</title>
+    <link rel="icon" type="image/jpeg" href="https://i.postimg.cc/kXy7XgXX/1794672862045.jpg">
+    <link rel="shortcut icon" type="image/jpeg" href="https://i.postimg.cc/kXy7XgXX/1794672862045.jpg">
     <style>
-        body { background-color: #030508; color: #c9d1d9; font-family: 'Courier New', Courier, monospace; padding: 20px; }
-        .box { background: #0b0f17; border: 1px solid #182232; padding: 20px; max-width: 550px; margin: auto; }
-        h1 { color: #00ff66; font-size: 1.1rem; margin-bottom: 15px; }
-        .alert { background: #1a0f0f; border: 1px solid #ff4444; padding: 10px; font-size: 0.75rem; color: #ff9999; margin-bottom: 15px; line-height: 1.4; }
-        .addr-box { background: #030508; border: 1px dashed #182232; padding: 8px; color: #00ff66; font-size: 0.75rem; word-break: break-all; margin-bottom: 10px; }
-        .coin-label { font-size: 0.78rem; color: #8b949e; margin-bottom: 3px; font-weight: bold; }
-        .btn { display: block; width: 100%; background: #00ff66; color: #030508; text-align: center; text-decoration: none; padding: 10px; font-weight: bold; text-transform: uppercase; box-sizing: border-box; margin-top: 15px; }
-        .nav { margin-bottom: 15px; font-size: 0.8rem; }
-        .nav a { color: #00ff66; text-decoration: none; margin-right: 10px; }
+        body { background-color: #0d1117; color: #c9d1d9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; }
+        header { background: #161b22; border-bottom: 1px solid #30363d; padding: 12px 20px; display: flex; align-items: center; }
+        .logo-container { display: flex; align-items: center; gap: 12px; }
+        .logo-img { width: 38px; height: 38px; border-radius: 6px; object-fit: cover; border: 1px solid #30363d; background: #0d1117; }
+        .logo-text { font-size: 16px; font-weight: bold; color: #33ff33; letter-spacing: 1px; text-transform: uppercase; }
+        .main-content { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .box { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 25px; width: 100%; max-width: 440px; box-sizing: border-box; box-shadow: 0 4px 20px rgba(0,0,0,0.6); text-align: center; }
+        h2 { color: #f85149; font-size: 16px; margin-top: 0; }
+        .notice { background: #21262d; border-left: 4px solid #f85149; padding: 10px; text-align: left; font-size: 13px; margin: 15px 0; border-radius: 4px; color: #8b949e; }
+        .address-box { background: #0d1117; padding: 12px; border: 1px dashed #30363d; word-break: break-all; font-size: 12px; color: #58a6ff; margin: 15px 0; border-radius: 4px; }
+        .action-btn { display: block; width: 100%; padding: 12px; text-align: center; background: #da3633; color: white; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; margin-top: 15px; font-size: 15px; box-sizing: border-box; }
+        .action-btn:hover { background: #b62324; }
+        .back-link { display: inline-block; margin-top: 15px; color: #8b949e; text-decoration: none; font-size: 13px; }
+        .back-link:hover { color: #58a6ff; }
     </style>
 </head>
 <body>
-    <div class="box">
-        <div class="nav">
-            <a href="catalog.html">Catalog</a> | 
-            <a href="deposit.html">Deposit</a> | 
-            <a href="seller.html">12 Vendors</a> | 
-            <a href="dashboard.html">History</a> | 
-            <a href="rules.html">Rules</a> | 
-            <a href="index.html">Logout</a>
+    <header>
+        <div class="logo-container">
+            <img src="https://i.postimg.cc/kXy7XgXX/1794672862045.jpg" alt="Logo" class="logo-img">
+            <span class="logo-text">CARD ZONE CLUB</span>
         </div>
-        <h1>[ ACTIVATION DEPOSIT VAULT ($25 MINIMUM) ]</h1>
-        <div class="alert">
-            <strong>ANTI-FLASH PROTOCOL:</strong> Minimum activation deposit is $25.00 equivalent. Flash BTC, Flash USDT, Flash XMR, Flash ETH, and Flash LTC are automatically rejected by node filters and <strong>silently ignored</strong>.
+    </header>
+
+    <div class="main-content">
+        <div class="box">
+            <h2>Anti-Flash Security Gate & Top-Up</h2>
+            <p style="font-size: 13px; color: #8b949e;">Mandatory minimum verification deposit of <b>$25.00 USDT</b> (TRC20) required for account activation. Refund policy is active under terms.</p>
+            <div class="notice">
+                <b>Rules & Refund Policy:</b> Top-ups are processed securely. Refund claims are valid per marketplace rules if drops fail verification. Deposits under $25 are ignored.
+            </div>
+            <p style="font-size: 13px;">Official Deposit / Refund Address:</p>
+            <div class="address-box">TRC20_WALLET_ADDRESS_PLACEHOLDER_XYZ9988</div>
+            <button class="action-btn" onclick="alert('Verifying network blocks and refund status...')">Verify Network Deposit</button>
+            <div><a href="index.html" class="back-link">← Back to Portal</a></div>
         </div>
-
-        <div class="coin-label">1. Bitcoin (BTC - zpub) Address:</div>
-        <div class="addr-box">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</div>
-
-        <div class="coin-label">2. Monero (XMR) Address:</div>
-        <div class="addr-box">888tNkZrPN6JsEgekjMnSB9aV8T6Rz1N29s9v2kgd</div>
-
-        <div class="coin-label">3. USDT (TRC-20) Address:</div>
-        <div class="addr-box">TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t</div>
-
-        <div class="coin-label">4. Ethereum (ETH) Address:</div>
-        <div class="addr-box">0x71C...YourETHAddressHere...9921</div>
-
-        <div class="coin-label">5. Litecoin (LTC) Address:</div>
-        <div class="addr-box">ltc1q...YourLTCAddressHere...8832</div>
-        
-        <a href="catalog.html" class="btn">I Have Deposited $25+ // Access Catalog</a>
     </div>
 </body>
 </html>
