@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SYSTEM CORE // RESTRICTED NODE</title>
+    <style>
+        :root { --bg-dark: #020305; --card-bg: #070a0f; --border-line: #141d2b; --text-glow: #00ff66; --text-dim: #8b949e; --alert-red: #ff3333; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Courier New', Courier, monospace; }
+        body { background-color: var(--bg-dark); color: #c9d1d9; padding: 15px; }
+        #auth-screen { display: flex; justify-content: center; align-items: center; min-height: 90vh; }
+        .terminal-box { background: var(--card-bg); border: 1px solid var(--border-line); padding: 25px; max-width: 450px; width: 100%; }
+        h1 { font-size: 1.05rem; color: var(--alert-red); letter-spacing: 2px; margin-bottom: 12px; text-transform: uppercase; text-align: center; }
+        .security-banner { background: #1a0808; border: 1px solid var(--alert-red); padding: 10px; font-size: 0.7rem; color: #ff9999; margin-bottom: 15px; }
+        .form-group { margin-bottom: 12px; }
+        label { display: block; font-size: 0.72rem; color: var(--text-dim); margin-bottom: 4px; text-transform: uppercase; }
+        input, select { width: 100%; background: var(--bg-dark); border: 1px solid var(--border-line); padding: 8px; color: var(--text-glow); font-size: 0.8rem; }
+        .btn-auth { width: 100%; background: var(--alert-red); color: #fff; border: none; padding: 10px; font-weight: bold; cursor: pointer; font-size: 0.8rem; text-transform: uppercase; margin-top: 10px; }
+        #dashboard-screen { display: none; }
+        header { border-bottom: 1px solid var(--border-line); padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .admin-panel-box { background: var(--card-bg); border: 1px solid var(--border-line); padding: 18px; }
+        .panel-heading { font-size: 0.85rem; color: #fff; font-weight: bold; margin-bottom: 12px; text-transform: uppercase; border-bottom: 1px dashed var(--border-line); padding-bottom: 6px; }
+        .stat-row { display: flex; justify-content: space-between; font-size: 0.78rem; margin-bottom: 8px; color: var(--text-dim); }
+        .stat-val { color: var(--text-glow); font-weight: bold; }
+        .control-btn { display: block; width: 100%; background: #162032; color: #fff; border: 1px solid var(--border-line); padding: 8px; text-align: center; font-size: 0.75rem; text-transform: uppercase; margin-top: 10px; cursor: pointer; text-decoration: none; }
+        footer { margin-top: 25px; text-align: center; font-size: 0.7rem; color: var(--text-dim); border-top: 1px solid var(--border-line); padding-top: 15px; }
+    </style>
+</head>
+<body>
+    <div id="auth-screen">
+        <div class="terminal-box">
+            <h1>[ RESTRICTED NODE ]</h1>
+            <div class="security-banner">
+                <strong>TRIPLE SECURITY PROTOCOL:</strong> Unauthorized login attempts trigger fake 404 trap.
+            </div>
+            <form onsubmit="verifyStrictAccess(event)">
+                <div class="form-group">
+                    <label>Node Clearance Level</label>
+                    <select id="clearance-level">
+                        <option value="owner">👑 Master Owner Node</option>
+                        <option value="admin">🛡️ Master Admin Node</option>
+                    </select>
+                </div>
+                <div class="form-group"><label>Terminal Handle</label><input type="text" id="node-user" required placeholder="Enter handle"></div>
+                <div class="form-group"><label>Master Passphrase</label><input type="password" id="node-pass" required placeholder="••••••••"></div>
+                <div class="form-group"><label>Secret Node Token Pin</label><input type="password" id="node-token" required placeholder="XXXX-XXXX"></div>
+                <button type="submit" class="btn-auth">Authorize & Unlock Core</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="dashboard-screen">
+        <header>
+            <div style="color:var(--text-glow); font-weight:bold;">[ ROOT TERMINAL ACTIVE // SECURE ]</div>
+            <nav><a href="catalog.html" style="color:var(--text-dim); text-decoration:none;">Exit to Market</a></nav>
+        </header>
+        <main>
+            <div class="admin-grid">
+                <div class="admin-panel-box">
+                    <div class="panel-heading">⚡ Operations & Vendors</div>
+                    <div class="stat-row"><span>Active Vendors:</span> <span class="stat-val">12 Nodes</span></div>
+                    <a href="#manage" class="control-btn" onclick="alert('Managing 12 Vendor Nodes...')">Manage Vendor Accounts</a>
+                </div>
+                <div class="admin-panel-box">
+                    <div class="panel-heading">🔐 Vault & Security</div>
+                    <div class="stat-row"><span>Escrow Balance:</span> <span class="stat-val">$3,850.00</span></div>
+                    <a href="#zpub" class="control-btn" onclick="alert('Managing zpub Keys...')">Manage zpub & Wallets</a>
+                </div>
+            </div>
+        </main>
+        <footer><p>&copy; 2026 CARDSZONECLUBCC.COM. SECURED ROOT TERMINAL.</p></footer>
+    </div>
+
+    <script>
+        function verifyStrictAccess(e) {
+            e.preventDefault();
+            let level = document.getElementById('clearance-level').value;
+            let user = document.getElementById('node-user').value.trim();
+            let pass = document.getElementById('node-pass').value.trim();
+            let token = document.getElementById('node-token').value.trim();
+
+            let ownerValid = (level === 'owner' && user === 'root_master_synapse' && pass === 'k9#Z$98vL!mQ2_SecureRoot2026' && token === '7799-SYNAPSE-ROOT');
+            let adminValid = (level === 'admin' && user === 'admin_node_keeper' && pass === 'xP7!mN#4qW$9_AdminNode2026' && token === '4411-KEEPER-NODE');
+
+            if(ownerValid || adminValid) {
+                document.getElementById('auth-screen').style.display = 'none';
+                document.getElementById('dashboard-screen').style.display = 'block';
+            } else {
+                // फेक 404 ट्रैप: गलत क्रेडेंशियल्स पर पेज गायब कर देगा
+                document.body.innerHTML = "<h2 style='color:#ff3333;text-align:center;margin-top:20vh;'>404 // Page Not Found</h2><p style='color:#8b949e;text-align:center;'>The requested resource does not exist on this server.</p>";
+            }
+        }
+    </script>
+</body>
+</html>
