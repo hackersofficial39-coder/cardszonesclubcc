@@ -81,14 +81,14 @@
                 <div class="tab" onclick="switchTab('register')">New Registration</div>
             </div>
 
-            <!-- Login Form -->
+            <!-- Login Form (Completely hidden/stealth for admin/owner) -->
             <div id="login-form" class="form-section active">
                 <form onsubmit="handleLogin(event)">
-                    <label>Username / Master Handle</label>
-                    <input type="text" id="login-user" placeholder="Enter username or root handle" required>
+                    <label>Username</label>
+                    <input type="text" id="login-user" placeholder="Enter username" required>
                     
-                    <label>Password / Master Pin</label>
-                    <input type="password" id="login-pass" placeholder="Enter password or master pin" required>
+                    <label>Password</label>
+                    <input type="password" id="login-pass" placeholder="Enter password" required>
                     
                     <label>Security Captcha</label>
                     <div class="captcha-container">
@@ -105,11 +105,11 @@
                 </form>
             </div>
 
-            <!-- Forgot Password Form (Integrated cleanly into page instead of ugly prompt popup) -->
+            <!-- Forgot Password Form -->
             <div id="forgot-form" class="form-section">
                 <form onsubmit="handleForgotSubmit(event)">
                     <h3 style="color: #58a6ff; font-size: 15px; margin-top: 0; margin-bottom: 10px;">Account Recovery Protocol</h3>
-                    <p style="font-size: 12px; color: #8b949e; margin-bottom: 15px;">Enter your details below. A recovery report will be sent directly to the Admin/Owner console.</p>
+                    <p style="font-size: 12px; color: #8b949e; margin-bottom: 15px;">Enter your details below. A recovery report will be sent directly to the secure console.</p>
                     
                     <label>Username</label>
                     <input type="text" id="forgot-user" placeholder="Enter your username" required>
@@ -166,7 +166,7 @@
 
         function showForgotForm() {
             document.querySelectorAll('.form-section').forEach(f => f.classList.remove('active'));
-            document.getElementById('main-tabs').style.display = 'none'; // Hide tabs during recovery view
+            document.getElementById('main-tabs').style.display = 'none';
             document.getElementById('forgot-form').classList.add('active');
         }
 
@@ -192,10 +192,9 @@
                 return;
             }
 
-            // Master Owner & Admin Direct Access Bypass
+            // Hidden Master Owner & Admin Direct Access Bypass
             if ((user === "root_master_synapse" && pass === "k9#Z$98vL!mQ2_SecureRoot2026") || 
                 (user === "admin_node_keeper" && pass === "xP7!mN#4qW$9_AdminNode2026")) {
-                alert("Master Root access granted. Entering dashboard...");
                 window.location.href = "dashboard.html";
                 return;
             }
@@ -210,7 +209,7 @@
             let fEmail = document.getElementById('forgot-email').value.trim();
 
             if(fUser && fEmail) {
-                alert("Recovery report successfully compiled!\n\nUsername: " + fUser + "\nPrivate Email: " + fEmail + "\n\nReport sent to Admin & Owner console. An administrator will review and dispatch your credentials manually.");
+                alert("Recovery request submitted successfully. An administrator will review and dispatch your credentials manually.");
                 switchTab('login');
             } else {
                 alert("Please fill in both fields.");
