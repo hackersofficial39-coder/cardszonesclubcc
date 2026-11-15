@@ -16,6 +16,7 @@
         label { display: block; font-size: 0.72rem; color: var(--text-dim); margin-bottom: 4px; text-transform: uppercase; }
         input, select { width: 100%; background: var(--bg-dark); border: 1px solid var(--border-line); padding: 8px; color: var(--text-glow); font-size: 0.8rem; }
         .btn-auth { width: 100%; background: var(--alert-red); color: #fff; border: none; padding: 10px; font-weight: bold; cursor: pointer; font-size: 0.8rem; text-transform: uppercase; margin-top: 10px; }
+        
         #dashboard-screen { display: none; }
         header { border-bottom: 1px solid var(--border-line); padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 20px; }
@@ -24,6 +25,11 @@
         .stat-row { display: flex; justify-content: space-between; font-size: 0.78rem; margin-bottom: 8px; color: var(--text-dim); }
         .stat-val { color: var(--text-glow); font-weight: bold; }
         .control-btn { display: block; width: 100%; background: #162032; color: #fff; border: 1px solid var(--border-line); padding: 8px; text-align: center; font-size: 0.75rem; text-transform: uppercase; margin-top: 10px; cursor: pointer; text-decoration: none; }
+        
+        table { width: 100%; border-collapse: collapse; background: var(--card-bg); border: 1px solid var(--border-line); margin-top: 20px; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid var(--border-line); font-size: 0.75rem; }
+        th { background: #162032; color: #58a6ff; }
+
         footer { margin-top: 25px; text-align: center; font-size: 0.7rem; color: var(--text-dim); border-top: 1px solid var(--border-line); padding-top: 15px; }
     </style>
 </head>
@@ -52,21 +58,51 @@
 
     <div id="dashboard-screen">
         <header>
-            <div style="color:var(--text-glow); font-weight:bold;">[ ROOT TERMINAL ACTIVE // SECURE ]</div>
-            <nav><a href="catalog.html" style="color:var(--text-dim); text-decoration:none;">Exit to Market</a></nav>
+            <div style="color:var(--text-glow); font-weight:bold;">[ ROOT TERMINAL ACTIVE // 24/7 MONITORING & FINANCIALS ]</div>
+            <nav><a href="dashboard.html" style="color:var(--text-dim); text-decoration:none; margin-right: 15px;">Dashboard</a><a href="catalog.html" style="color:var(--text-dim); text-decoration:none;">Exit to Market</a></nav>
         </header>
         <main>
+            <!-- Analytics & Monitoring Grid -->
             <div class="admin-grid">
                 <div class="admin-panel-box">
-                    <div class="panel-heading">⚡ Operations & Vendors</div>
-                    <div class="stat-row"><span>Active Vendors:</span> <span class="stat-val">12 Nodes</span></div>
-                    <a href="#manage" class="control-btn" onclick="alert('Managing 12 Vendor Nodes...')">Manage Vendor Accounts</a>
-                </div>
-                <div class="admin-panel-box">
-                    <div class="panel-heading">🔐 Vault & Security</div>
+                    <div class="panel-heading">📊 Financial Volume & Profit Split</div>
+                    <div class="stat-row"><span>Total Volume (This Month):</span> <span class="stat-val">$24,950.00</span></div>
+                    <div class="stat-row"><span>Platform Net Profit:</span> <span class="stat-val">$6,237.50</span></div>
+                    <div class="stat-row"><span>Activation Fees Collected:</span> <span class="stat-val">$1,875.00</span></div>
                     <div class="stat-row"><span>Escrow Balance:</span> <span class="stat-val">$3,850.00</span></div>
-                    <a href="#zpub" class="control-btn" onclick="alert('Managing zpub Keys...')">Manage zpub & Wallets</a>
                 </div>
+
+                <div class="admin-panel-box">
+                    <div class="panel-heading">🛡️ 24/7 Security & Traffic Monitor</div>
+                    <div class="stat-row"><span>Active Traffic Nodes:</span> <span class="stat-val">342 Users Online</span></div>
+                    <div class="stat-row"><span>DDoS Mitigation:</span> <span class="stat-val" style="color:#00ff66;">ACTIVE / SHIELDED</span></div>
+                    <div class="stat-row"><span>Blocked Threats (24h):</span> <span class="stat-val" style="color:#ff3333;">1,429 Bots</span></div>
+                    <div class="stat-row"><span>Tor/Proxy Filtering:</span> <span class="stat-val">STRICT MODE</span></div>
+                </div>
+            </div>
+
+            <!-- Official 12 Verified Seller Credentials Table -->
+            <div class="admin-panel-box" style="margin-top: 20px;">
+                <div class="panel-heading">📋 Official 12 Verified Seller Credentials</div>
+                <table>
+                    <thead>
+                        <tr><th>Slot</th><th>Vendor Username (ID)</th><th>Access Password</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>01</td><td>CZC_VEND_01</td><td>pass_alpha_991</td></tr>
+                        <tr><td>02</td><td>CZC_VEND_02</td><td>pass_prime_882</td></tr>
+                        <tr><td>03</td><td>CZC_VEND_03</td><td>pass_elite_773</td></tr>
+                        <tr><td>04</td><td>CZC_VEND_04</td><td>pass_synapse_664</td></tr>
+                        <tr><td>05</td><td>CZC_VEND_05</td><td>pass_nexus_555</td></tr>
+                        <tr><td>06</td><td>CZC_VEND_06</td><td>pass_vertex_446</td></tr>
+                        <tr><td>07</td><td>CZC_VEND_07</td><td>pass_core_337</td></tr>
+                        <tr><td>08</td><td>CZC_VEND_08</td><td>pass_cipher_228</td></tr>
+                        <tr><td>09</td><td>CZC_VEND_09</td><td>pass_shield_119</td></tr>
+                        <tr><td>10</td><td>CZC_VEND_10</td><td>pass_vault_990</td></tr>
+                        <tr><td>11</td><td>CZC_VEND_11</td><td>pass_spectre_881</td></tr>
+                        <tr><td>12</td><td>CZC_VEND_12</td><td>pass_root_772</td></tr>
+                    </tbody>
+                </table>
             </div>
         </main>
         <footer><p>&copy; 2026 CARDSZONECLUBCC.COM. SECURED ROOT TERMINAL.</p></footer>
@@ -87,7 +123,6 @@
                 document.getElementById('auth-screen').style.display = 'none';
                 document.getElementById('dashboard-screen').style.display = 'block';
             } else {
-                // फेक 404 ट्रैप: गलत क्रेडेंशियल्स पर पेज गायब कर देगा
                 document.body.innerHTML = "<h2 style='color:#ff3333;text-align:center;margin-top:20vh;'>404 // Page Not Found</h2><p style='color:#8b949e;text-align:center;'>The requested resource does not exist on this server.</p>";
             }
         }
