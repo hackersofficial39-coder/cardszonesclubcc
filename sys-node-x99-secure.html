@@ -3,42 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SYSTEM CORE // RESTRICTED NODE</title>
+    <title>SYSTEM CORE // SECURE MASTER TERMINAL</title>
     <style>
-        :root { --bg-dark: #020305; --card-bg: #070a0f; --border-line: #141d2b; --text-glow: #00ff66; --text-dim: #8b949e; --alert-red: #ff3333; }
+        :root { 
+            --bg-dark: #0b0f17; 
+            --card-bg: #111827; 
+            --border-line: #1f2937; 
+            --text-glow: #10b981; 
+            --text-dim: #9ca3af; 
+            --alert-red: #ef4444; 
+            --btn-blue: #2563eb;
+        }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Courier New', Courier, monospace; }
-        body { background-color: var(--bg-dark); color: #c9d1d9; padding: 15px; }
-        #auth-screen { display: flex; justify-content: center; align-items: center; min-height: 90vh; }
-        .terminal-box { background: var(--card-bg); border: 1px solid var(--border-line); padding: 25px; max-width: 450px; width: 100%; }
-        h1 { font-size: 1.05rem; color: var(--alert-red); letter-spacing: 2px; margin-bottom: 12px; text-transform: uppercase; text-align: center; }
-        .security-banner { background: #1a0808; border: 1px solid var(--alert-red); padding: 10px; font-size: 0.7rem; color: #ff9999; margin-bottom: 15px; }
-        .form-group { margin-bottom: 12px; }
-        label { display: block; font-size: 0.72rem; color: var(--text-dim); margin-bottom: 4px; text-transform: uppercase; }
-        input, select { width: 100%; background: var(--bg-dark); border: 1px solid var(--border-line); padding: 8px; color: var(--text-glow); font-size: 0.8rem; }
-        .btn-auth { width: 100%; background: var(--alert-red); color: #fff; border: none; padding: 10px; font-weight: bold; cursor: pointer; font-size: 0.8rem; text-transform: uppercase; margin-top: 10px; }
+        body { background-color: var(--bg-dark); color: #e5e7eb; padding: 20px; }
+        
+        #auth-screen { display: flex; justify-content: center; align-items: center; min-height: 85vh; }
+        .terminal-box { background: var(--card-bg); border: 1px solid var(--border-line); padding: 30px; max-width: 450px; width: 100%; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        h1 { font-size: 1.1rem; color: var(--alert-red); letter-spacing: 2px; margin-bottom: 15px; text-transform: uppercase; text-align: center; }
+        .security-banner { background: rgba(239, 68, 68, 0.1); border: 1px solid var(--alert-red); padding: 10px; font-size: 0.72rem; color: #fca5a5; margin-bottom: 20px; border-radius: 4px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-size: 0.75rem; color: var(--text-dim); margin-bottom: 5px; text-transform: uppercase; }
+        input, select { width: 100%; background: #030712; border: 1px solid var(--border-line); padding: 10px; color: var(--text-glow); font-size: 0.85rem; border-radius: 4px; }
+        .btn-auth { width: 100%; background: var(--alert-red); color: #fff; border: none; padding: 12px; font-weight: bold; cursor: pointer; font-size: 0.85rem; text-transform: uppercase; margin-top: 10px; border-radius: 4px; }
+        .btn-auth:hover { background: #dc2626; }
         
         #dashboard-screen { display: none; }
-        header { border-bottom: 1px solid var(--border-line); padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 20px; }
-        .admin-panel-box { background: var(--card-bg); border: 1px solid var(--border-line); padding: 18px; }
-        .panel-heading { font-size: 0.85rem; color: #fff; font-weight: bold; margin-bottom: 12px; text-transform: uppercase; border-bottom: 1px dashed var(--border-line); padding-bottom: 6px; }
-        .stat-row { display: flex; justify-content: space-between; font-size: 0.78rem; margin-bottom: 8px; color: var(--text-dim); }
+        header { background: var(--card-bg); border: 1px solid var(--border-line); padding: 15px 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-radius: 6px; }
+        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 25px; }
+        .admin-panel-box { background: var(--card-bg); border: 1px solid var(--border-line); padding: 20px; border-radius: 6px; margin-bottom: 20px; }
+        .panel-heading { font-size: 0.9rem; color: #fff; font-weight: bold; margin-bottom: 15px; text-transform: uppercase; border-bottom: 1px solid var(--border-line); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .stat-row { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 10px; color: var(--text-dim); }
         .stat-val { color: var(--text-glow); font-weight: bold; }
-        .control-btn { display: block; width: 100%; background: #162032; color: #fff; border: 1px solid var(--border-line); padding: 8px; text-align: center; font-size: 0.75rem; text-transform: uppercase; margin-top: 10px; cursor: pointer; text-decoration: none; }
         
-        table { width: 100%; border-collapse: collapse; background: var(--card-bg); border: 1px solid var(--border-line); margin-top: 20px; }
-        th, td { padding: 10px; text-align: left; border-bottom: 1px solid var(--border-line); font-size: 0.75rem; }
-        th { background: #162032; color: #58a6ff; }
+        table { width: 100%; border-collapse: collapse; background: var(--card-bg); border: 1px solid var(--border-line); border-radius: 6px; overflow: hidden; margin-top: 10px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid var(--border-line); font-size: 0.8rem; }
+        th { background: #1f2937; color: #60a5fa; }
 
-        footer { margin-top: 25px; text-align: center; font-size: 0.7rem; color: var(--text-dim); border-top: 1px solid var(--border-line); padding-top: 15px; }
+        .toggle-btn { padding: 6px 12px; font-size: 0.75rem; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; text-transform: uppercase; }
+        .btn-on { background: #065f46; color: #34d399; }
+        .btn-off { background: #7f1d1d; color: #f87171; }
+        .btn-kick { background: #991b1b; color: #fca5a5; margin-left: 5px; }
+        .btn-kick:hover { background: #7f1d1d; }
+
+        .global-control-banner { background: #1f2937; border: 1px solid #374151; padding: 15px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+
+        footer { margin-top: 30px; text-align: center; font-size: 0.75rem; color: var(--text-dim); border-top: 1px solid var(--border-line); padding-top: 15px; }
+        nav a { color: #60a5fa; text-decoration: none; margin-left: 15px; font-size: 0.85rem; }
+        nav a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
+    <!-- Authorization Screen -->
     <div id="auth-screen">
         <div class="terminal-box">
             <h1>[ RESTRICTED NODE ]</h1>
             <div class="security-banner">
-                <strong>TRIPLE SECURITY PROTOCOL:</strong> Unauthorized login attempts trigger fake 404 trap.
+                <strong>SECURE GATEWAY:</strong> Unauthorized access triggers automated defensive traps.
             </div>
             <form onsubmit="verifyStrictAccess(event)">
                 <div class="form-group">
@@ -56,52 +76,88 @@
         </div>
     </div>
 
+    <!-- Dashboard Screen -->
     <div id="dashboard-screen">
         <header>
-            <div style="color:var(--text-glow); font-weight:bold;">[ ROOT TERMINAL ACTIVE // 24/7 MONITORING & FINANCIALS ]</div>
-            <nav><a href="dashboard.html" style="color:var(--text-dim); text-decoration:none; margin-right: 15px;">Dashboard</a><a href="catalog.html" style="color:var(--text-dim); text-decoration:none;">Exit to Market</a></nav>
+            <div style="color:var(--text-glow); font-weight:bold; font-size: 0.9rem;">[ MASTER ROOT TERMINAL // LIVE MONITORING & CONTROLS ]</div>
+            <nav>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="catalog.html">Marketplace</a>
+                <a href="index.html" style="color:var(--alert-red);">Logout</a>
+            </nav>
         </header>
-        <main>
-            <!-- Analytics & Monitoring Grid -->
-            <div class="admin-grid">
-                <div class="admin-panel-box">
-                    <div class="panel-heading">📊 Financial Volume & Profit Split</div>
-                    <div class="stat-row"><span>Total Volume (This Month):</span> <span class="stat-val">$24,950.00</span></div>
-                    <div class="stat-row"><span>Platform Net Profit:</span> <span class="stat-val">$6,237.50</span></div>
-                    <div class="stat-row"><span>Activation Fees Collected:</span> <span class="stat-val">$1,875.00</span></div>
-                    <div class="stat-row"><span>Escrow Balance:</span> <span class="stat-val">$3,850.00</span></div>
-                </div>
 
-                <div class="admin-panel-box">
-                    <div class="panel-heading">🛡️ 24/7 Security & Traffic Monitor</div>
-                    <div class="stat-row"><span>Active Traffic Nodes:</span> <span class="stat-val">342 Users Online</span></div>
-                    <div class="stat-row"><span>DDoS Mitigation:</span> <span class="stat-val" style="color:#00ff66;">ACTIVE / SHIELDED</span></div>
-                    <div class="stat-row"><span>Blocked Threats (24h):</span> <span class="stat-val" style="color:#ff3333;">1,429 Bots</span></div>
-                    <div class="stat-row"><span>Tor/Proxy Filtering:</span> <span class="stat-val">STRICT MODE</span></div>
+        <main>
+            <!-- Global Control Banner -->
+            <div class="global-control-banner">
+                <div>
+                    <strong style="color: #fff; font-size: 0.85rem; display: block; margin-bottom: 3px;">🌐 Global Vendor Partner Program & Registration Portal</strong>
+                    <span style="font-size: 0.75rem; color: var(--text-dim);" id="reg-status-desc">Status: Accepting new partner vendor applications & requests.</span>
                 </div>
+                <button id="global-reg-btn" class="toggle-btn btn-on" onclick="toggleGlobalRegistration()">PORTAL ACTIVE (ON)</button>
             </div>
 
-            <!-- Official 12 Verified Seller Credentials Table -->
-            <div class="admin-panel-box" style="margin-top: 20px;">
-                <div class="panel-heading">📋 Official 12 Verified Seller Credentials</div>
+            <!-- New User Registrations & Create Account Logs -->
+            <div class="admin-panel-box">
+                <div class="panel-heading">
+                    <span>📋 New Account Registrations & User Details Log</span>
+                    <span style="font-size: 0.75rem; color: var(--text-glow);" id="reg-logs-count">0 Accounts Registered</span>
+                </div>
                 <table>
                     <thead>
-                        <tr><th>Slot</th><th>Vendor Username (ID)</th><th>Access Password</th></tr>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Username</th>
+                            <th>Password (Saved)</th>
+                            <th>36-Digit Access Key</th>
+                            <th>Status</th>
+                        </tr>
                     </thead>
-                    <tbody>
-                        <tr><td>01</td><td>CZC_VEND_01</td><td>pass_alpha_991</td></tr>
-                        <tr><td>02</td><td>CZC_VEND_02</td><td>pass_prime_882</td></tr>
-                        <tr><td>03</td><td>CZC_VEND_03</td><td>pass_elite_773</td></tr>
-                        <tr><td>04</td><td>CZC_VEND_04</td><td>pass_synapse_664</td></tr>
-                        <tr><td>05</td><td>CZC_VEND_05</td><td>pass_nexus_555</td></tr>
-                        <tr><td>06</td><td>CZC_VEND_06</td><td>pass_vertex_446</td></tr>
-                        <tr><td>07</td><td>CZC_VEND_07</td><td>pass_core_337</td></tr>
-                        <tr><td>08</td><td>CZC_VEND_08</td><td>pass_cipher_228</td></tr>
-                        <tr><td>09</td><td>CZC_VEND_09</td><td>pass_shield_119</td></tr>
-                        <tr><td>10</td><td>CZC_VEND_10</td><td>pass_vault_990</td></tr>
-                        <tr><td>11</td><td>CZC_VEND_11</td><td>pass_spectre_881</td></tr>
-                        <tr><td>12</td><td>CZC_VEND_12</td><td>pass_root_772</td></tr>
+                    <tbody id="reg-logs-table-body">
+                        <tr><td colspan="5" style="text-align:center; color:var(--text-dim);">No new account registrations recorded yet.</td></tr>
                     </tbody>
+                </table>
+            </div>
+
+            <!-- Admin Inbox / Password Recovery Reports -->
+            <div class="admin-panel-box">
+                <div class="panel-heading">
+                    <span>📥 Admin Inbox // Password Recovery Reports</span>
+                    <span style="font-size: 0.75rem; color: var(--text-glow);" id="inbox-count">0 Requests</span>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time Stamp</th>
+                            <th>Target Username</th>
+                            <th>Private Email (Target)</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="inbox-table-body">
+                        <tr><td colspan="5" style="text-align:center; color:var(--text-dim);">No recovery tickets in inbox.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Verified Sellers Management with KICK Button -->
+            <div class="admin-panel-box">
+                <div class="panel-heading">
+                    <span>📋 Official Verified Sellers Management & Kick Control</span>
+                    <span style="font-size: 0.75rem; color: var(--text-dim);">Full Partner Control</span>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Slot</th>
+                            <th>Vendor Username (ID)</th>
+                            <th>Access Password</th>
+                            <th>Status Control</th>
+                            <th>Partner Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="seller-table-body"></tbody>
                 </table>
             </div>
         </main>
@@ -109,6 +165,135 @@
     </div>
 
     <script>
+        let globalRegistrationActive = true;
+
+        let sellers = [
+            { id: "CZC_VEND_01", pass: "pass_alpha_991", active: true },
+            { id: "CZC_VEND_02", pass: "pass_prime_882", active: true },
+            { id: "CZC_VEND_03", pass: "pass_elite_773", active: true },
+            { id: "CZC_VEND_04", pass: "pass_synapse_664", active: true },
+            { id: "CZC_VEND_05", pass: "pass_nexus_555", active: true },
+            { id: "CZC_VEND_06", pass: "pass_vertex_446", active: true },
+            { id: "CZC_VEND_07", pass: "pass_core_337", active: true },
+            { id: "CZC_VEND_08", pass: "pass_cipher_228", active: true },
+            { id: "CZC_VEND_09", pass: "pass_shield_119", active: true },
+            { id: "CZC_VEND_10", pass: "pass_vault_990", active: true },
+            { id: "CZC_VEND_11", pass: "pass_spectre_881", active: true },
+            { id: "CZC_VEND_12", pass: "pass_root_772", active: true }
+        ];
+
+        function renderSellers() {
+            let tbody = document.getElementById('seller-table-body');
+            tbody.innerHTML = "";
+            if (sellers.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--alert-red);">No active verified sellers in network (All slots cleared/kicked).</td></tr>`;
+                return;
+            }
+            sellers.forEach((s, index) => {
+                let row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${String(index + 1).padStart(2, '0')}</td>
+                    <td style="font-weight:bold; color:#60a5fa;">${s.id}</td>
+                    <td>${s.pass}</td>
+                    <td>
+                        <button class="toggle-btn ${s.active ? 'btn-on' : 'btn-off'}" onclick="toggleSeller(${index})">
+                            ${s.active ? 'ONLINE (ON)' : 'OFFLINE (OFF)'}
+                        </button>
+                    </td>
+                    <td>
+                        <button class="toggle-btn btn-kick" onclick="kickSeller(${index})">KICK / REMOVE</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function kickSeller(index) {
+            let vendorId = sellers[index].id;
+            if (confirm("CRITICAL WARNING: Are you sure you want to permanently kick and remove " + vendorId + " from the Partner Program?")) {
+                sellers.splice(index, 1);
+                renderSellers();
+                alert(vendorId + " has been successfully kicked and revoked from network.");
+            }
+        }
+
+        function renderRegLogs() {
+            let regBody = document.getElementById('reg-logs-table-body');
+            let regLogs = JSON.parse(localStorage.getItem('czc_admin_new_registrations') || '[]');
+            document.getElementById('reg-logs-count').innerText = regLogs.length + " Accounts Registered";
+
+            if (regLogs.length === 0) {
+                regBody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--text-dim);">No new account registrations recorded yet.</td></tr>`;
+                return;
+            }
+
+            regBody.innerHTML = "";
+            regLogs.forEach((log) => {
+                let tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-size:0.75rem; color:var(--text-dim);">${log.timestamp}</td>
+                    <td style="font-weight:bold; color:#60a5fa;">${log.username}</td>
+                    <td style="color:#fca5a5;">${log.password}</td>
+                    <td style="font-size:0.75rem; color:#34d399; word-break:break-all;">${log.accessKey}</td>
+                    <td><span style="background:rgba(16,185,129,0.2); color:#34d399; padding:2px 6px; border-radius:3px; font-size:0.7rem;">PENDING DEPOSIT</span></td>
+                `;
+                regBody.appendChild(tr);
+            });
+        }
+
+        function renderAdminInbox() {
+            let inboxBody = document.getElementById('inbox-table-body');
+            let reports = JSON.parse(localStorage.getItem('czc_admin_recovery_inbox') || '[]');
+            document.getElementById('inbox-count').innerText = reports.length + " Requests";
+
+            if (reports.length === 0) {
+                inboxBody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--text-dim);">No recovery tickets in inbox.</td></tr>`;
+                return;
+            }
+
+            inboxBody.innerHTML = "";
+            reports.forEach((rep, idx) => {
+                let tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="font-size:0.75rem; color:var(--text-dim);">${rep.timestamp}</td>
+                    <td style="font-weight:bold; color:#60a5fa;">${rep.username}</td>
+                    <td style="color:#34d399;">${rep.email}</td>
+                    <td><span style="background:rgba(239,68,68,0.2); color:#fca5a5; padding:2px 6px; border-radius:3px; font-size:0.7rem;">${rep.status}</span></td>
+                    <td>
+                        <button class="toggle-btn btn-on" onclick="resolveTicket(${idx})" style="font-size:0.65rem; padding:4px 8px;">MARK SENT</button>
+                    </td>
+                `;
+                inboxBody.appendChild(tr);
+            });
+        }
+
+        function resolveTicket(index) {
+            let reports = JSON.parse(localStorage.getItem('czc_admin_recovery_inbox') || '[]');
+            reports[index].status = 'RESOLVED / SENT';
+            localStorage.setItem('czc_admin_recovery_inbox', JSON.stringify(reports));
+            renderAdminInbox();
+        }
+
+        function toggleSeller(index) {
+            sellers[index].active = !sellers[index].active;
+            renderSellers();
+        }
+
+        function toggleGlobalRegistration() {
+            globalRegistrationActive = !globalRegistrationActive;
+            let btn = document.getElementById('global-reg-btn');
+            let desc = document.getElementById('reg-status-desc');
+            if(globalRegistrationActive) {
+                btn.className = "toggle-btn btn-on";
+                btn.innerText = "PORTAL ACTIVE (ON)";
+                desc.innerText = "Status: Accepting new partner vendor applications & requests.";
+            } else {
+                btn.className = "toggle-btn btn-off";
+                btn.innerText = "PORTAL CLOSED (OFF)";
+                desc.innerText = "Status: Vendor registration portal is currently offline/suspended.";
+            }
+        }
+
         function verifyStrictAccess(e) {
             e.preventDefault();
             let level = document.getElementById('clearance-level').value;
@@ -122,8 +307,11 @@
             if(ownerValid || adminValid) {
                 document.getElementById('auth-screen').style.display = 'none';
                 document.getElementById('dashboard-screen').style.display = 'block';
+                renderSellers();
+                renderRegLogs();
+                renderAdminInbox();
             } else {
-                document.body.innerHTML = "<h2 style='color:#ff3333;text-align:center;margin-top:20vh;'>404 // Page Not Found</h2><p style='color:#8b949e;text-align:center;'>The requested resource does not exist on this server.</p>";
+                document.body.innerHTML = "<h2 style='color:#ef4444;text-align:center;margin-top:20vh;'>404 // Page Not Found</h2><p style='color:#9ca3af;text-align:center;'>The requested resource does not exist on this server.</p>";
             }
         }
     </script>
