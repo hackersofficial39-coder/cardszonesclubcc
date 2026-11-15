@@ -3,23 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Card Zone Club - Account Activation</title>
+    <title>Card Zone Club - Account Activation & Wallet</title>
     <link rel="icon" type="image/jpeg" href="https://i.postimg.cc/kXy7XgXX/1794672862045.jpg">
     <link rel="shortcut icon" type="image/jpeg" href="https://i.postimg.cc/kXy7XgXX/1794672862045.jpg">
     <style>
         body { background-color: #0d1117; color: #c9d1d9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; }
-        header { background: #161b22; border-bottom: 1px solid #30363d; padding: 12px 20px; display: flex; align-items: center; }
+        
+        header { background: #161b22; border-bottom: 1px solid #30363d; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; }
         .logo-container { display: flex; align-items: center; gap: 12px; }
         .logo-img { width: 38px; height: 38px; border-radius: 6px; object-fit: cover; border: 1px solid #30363d; background: #0d1117; }
         .logo-text { font-size: 16px; font-weight: bold; color: #33ff33; letter-spacing: 1px; text-transform: uppercase; }
+        
+        .top-activation-bar { background: #1f6feb; color: #ffffff; padding: 10px 20px; text-align: center; font-size: 13px; font-weight: bold; border-bottom: 1px solid #388bfd; letter-spacing: 0.3px; }
+
         .main-content { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; }
-        .box { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 25px; width: 100%; max-width: 440px; box-sizing: border-box; box-shadow: 0 4px 20px rgba(0,0,0,0.6); text-align: center; }
-        h2 { color: #f85149; font-size: 16px; margin-top: 0; }
-        .notice { background: #21262d; border-left: 4px solid #f85149; padding: 10px; text-align: left; font-size: 13px; margin: 15px 0; border-radius: 4px; color: #8b949e; }
-        .address-box { background: #0d1117; padding: 12px; border: 1px dashed #30363d; word-break: break-all; font-size: 12px; color: #58a6ff; margin: 15px 0; border-radius: 4px; }
-        .action-btn { display: block; width: 100%; padding: 12px; text-align: center; background: #da3633; color: white; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; margin-top: 15px; font-size: 15px; box-sizing: border-box; }
-        .action-btn:hover { background: #b62324; }
-        .back-link { display: inline-block; margin-top: 15px; color: #8b949e; text-decoration: none; font-size: 13px; }
+        .box { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 25px; width: 100%; max-width: 480px; box-sizing: border-box; box-shadow: 0 4px 20px rgba(0,0,0,0.6); }
+        
+        h2 { color: #33ff33; font-size: 18px; margin-top: 0; margin-bottom: 10px; text-align: center; }
+        .activation-desc { font-size: 13px; color: #8b949e; line-height: 1.5; margin-bottom: 20px; text-align: center; }
+        
+        .crypto-tabs { display: flex; gap: 5px; margin-bottom: 15px; flex-wrap: wrap; justify-content: center; }
+        .crypto-tab { background: #21262d; border: 1px solid #30363d; color: #c9d1d9; padding: 6px 10px; border-radius: 4px; font-size: 12px; cursor: pointer; font-weight: bold; }
+        .crypto-tab.active { background: #238636; border-color: #238636; color: #fff; }
+
+        .crypto-panel { display: none; }
+        .crypto-panel.active { display: block; }
+
+        .address-container { background: #0d1117; padding: 15px; border: 1px dashed #30363d; border-radius: 6px; margin-bottom: 15px; text-align: left; }
+        .address-label { font-size: 11px; color: #8b949e; text-transform: uppercase; font-weight: bold; margin-bottom: 5px; display: block; }
+        .address-box { font-size: 11px; color: #58a6ff; word-break: break-all; font-family: monospace; }
+        
+        .amount-input { width: 100%; padding: 10px; background: #0d1117; border: 1px solid #30363d; color: #fff; border-radius: 6px; font-size: 14px; margin-bottom: 15px; box-sizing: border-box; }
+        .amount-input:focus { border-color: #33ff33; outline: none; }
+
+        .action-btn { display: block; width: 100%; padding: 12px; text-align: center; background: #238636; color: white; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; font-size: 15px; box-sizing: border-box; }
+        .action-btn:hover { background: #2ea043; }
+        
+        #waiting-overlay { display: none; text-align: center; padding: 10px 0; }
+        .spinner { border: 3px solid #30363d; width: 32px; height: 32px; border-radius: 50%; border-left-color: #33ff33; animation: spin 1s linear infinite; margin: 0 auto 15px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .timer-text { color: #58a6ff; font-weight: bold; font-family: monospace; font-size: 14px; margin-top: 5px; }
+
+        .back-link { display: block; text-align: center; margin-top: 15px; color: #8b949e; text-decoration: none; font-size: 13px; }
         .back-link:hover { color: #58a6ff; }
     </style>
 </head>
@@ -29,20 +54,160 @@
             <img src="https://i.postimg.cc/kXy7XgXX/1794672862045.jpg" alt="Logo" class="logo-img">
             <span class="logo-text">CARD ZONE CLUB</span>
         </div>
+        <div>
+            <a href="index.html" style="color: #f85149; text-decoration: none; font-size: 13px; font-weight: bold;">Logout</a>
+        </div>
     </header>
+
+    <div class="top-activation-bar">
+        New Account Activation: Minimum deposit is $25
+    </div>
 
     <div class="main-content">
         <div class="box">
-            <h2>Anti-Flash Security Gate & Top-Up</h2>
-            <p style="font-size: 13px; color: #8b949e;">Mandatory minimum verification deposit of <b>$25.00 USDT</b> (TRC20) required for account activation. Refund policy is active under terms.</p>
-            <div class="notice">
-                <b>Rules & Refund Policy:</b> Top-ups are processed securely. Refund claims are valid per marketplace rules if drops fail verification. Deposits under $25 are ignored.
+            <h2>Account Activation & Wallet</h2>
+            
+            <div id="form-container">
+                <div class="activation-desc">
+                    Mandatory account activation requires a minimum of <b>$25</b>. Once your payment is received and confirmed on the network, your account will be unlocked. Subsequent deposits are optional for future purchases.
+                </div>
+                
+                <div class="crypto-tabs">
+                    <div class="crypto-tab active" onclick="switchCrypto('usdt')">USDT (TRC20)</div>
+                    <div class="crypto-tab" onclick="switchCrypto('btc')">Bitcoin (BTC)</div>
+                    <div class="crypto-tab" onclick="switchCrypto('ltc')">Litecoin (LTC)</div>
+                    <div class="crypto-tab" onclick="switchCrypto('eth')">Ethereum (ETH)</div>
+                    <div class="crypto-tab" onclick="switchCrypto('xmr')">Monero (XMR)</div>
+                </div>
+
+                <div id="panel-usdt" class="crypto-panel active">
+                    <div class="address-container">
+                        <span class="address-label">USDT (TRC20) Deposit Address</span>
+                        <div class="address-box">TRC20_WALLET_CZC_OFFICIAL_ADDRESS_9988</div>
+                    </div>
+                </div>
+                <div id="panel-btc" class="crypto-panel">
+                    <div class="address-container">
+                        <span class="address-label">Bitcoin (BTC) Deposit Address</span>
+                        <div class="address-box">bc1q_CZC_OFFICIAL_BITCOIN_WALLET_ADDRESS_5544</div>
+                    </div>
+                </div>
+                <div id="panel-ltc" class="crypto-panel">
+                    <div class="address-container">
+                        <span class="address-label">Litecoin (LTC) Deposit Address</span>
+                        <div class="address-box">ltc1_CZC_OFFICIAL_LITECOIN_WALLET_ADDRESS_7722</div>
+                    </div>
+                </div>
+                <div id="panel-eth" class="crypto-panel">
+                    <div class="address-container">
+                        <span class="address-label">Ethereum (ERC20) Deposit Address</span>
+                        <div class="address-box">0x_CZC_OFFICIAL_ETHEREUM_WALLET_ADDRESS_3311</div>
+                    </div>
+                </div>
+                <div id="panel-xmr" class="crypto-panel">
+                    <div class="address-container">
+                        <span class="address-label">Monero (XMR) Deposit Address</span>
+                        <div class="address-box">88_CZC_OFFICIAL_MONERO_STEALTH_ADDRESS_8899</div>
+                    </div>
+                </div>
+
+                <label style="font-size: 12px; color: #8b949e; display: block; margin-bottom: 5px; font-weight: bold;">Enter Sent Amount (USD Value):</label>
+                <input type="number" id="deposit-amount" class="amount-input" placeholder="e.g. 25.00" step="0.01" required>
+
+                <button class="action-btn" onclick="startActivationCheck()">Verify & Wait For Activation Payment</button>
+                <a href="index.html" class="back-link">← Cancel / Return</a>
             </div>
-            <p style="font-size: 13px;">Official Deposit / Refund Address:</p>
-            <div class="address-box">TRC20_WALLET_ADDRESS_PLACEHOLDER_XYZ9988</div>
-            <button class="action-btn" onclick="alert('Verifying network blocks and refund status...')">Verify Network Deposit</button>
-            <div><a href="index.html" class="back-link">← Back to Portal</a></div>
+
+            <!-- Live Polling / Waiting Screen for Activation -->
+            <div id="waiting-overlay">
+                <div class="spinner"></div>
+                <h3 style="color: #33ff33; margin-bottom: 5px;">Waiting for Network Confirmation...</h3>
+                <p style="font-size: 13px; color: #8b949e; margin-bottom: 15px;">Checking blockchain node for $25 activation deposit. Account will unlock automatically once received.</p>
+                <div class="timer-text" id="countdown-timer">Time Remaining: 05:00</div>
+                <button class="action-btn" style="background: #21262d; border: 1px solid #30363d; margin-top: 20px;" onclick="cancelWaiting()">Cancel</button>
+            </div>
+
         </div>
     </div>
+
+    <script>
+        let pollTimer = null;
+        let countdownInterval = null;
+
+        function switchCrypto(crypto) {
+            document.querySelectorAll('.crypto-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.crypto-panel').forEach(p => p.classList.remove('active'));
+            
+            if(crypto === 'usdt') {
+                document.querySelectorAll('.crypto-tab')[0].classList.add('active');
+                document.getElementById('panel-usdt').classList.add('active');
+            } else if(crypto === 'btc') {
+                document.querySelectorAll('.crypto-tab')[1].classList.add('active');
+                document.getElementById('panel-btc').classList.add('active');
+            } else if(crypto === 'ltc') {
+                document.querySelectorAll('.crypto-tab')[2].classList.add('active');
+                document.getElementById('panel-ltc').classList.add('active');
+            } else if(crypto === 'eth') {
+                document.querySelectorAll('.crypto-tab')[3].classList.add('active');
+                document.getElementById('panel-eth').classList.add('active');
+            } else if(crypto === 'xmr') {
+                document.querySelectorAll('.crypto-tab')[4].classList.add('active');
+                document.getElementById('panel-xmr').classList.add('active');
+            }
+        }
+
+        function startActivationCheck() {
+            let val = parseFloat(document.getElementById('deposit-amount').value);
+            
+            if (isNaN(val)) {
+                alert("Please enter a valid amount.");
+                return;
+            }
+
+            // Strict threshold check: Below $24.50 gets ignored/rejected immediately
+            if (val < 24.50) {
+                alert("Amount is below the mandatory $25 activation fee. Deposit ignored.");
+                return;
+            }
+
+            // Hide form, show live timer waiting screen
+            document.getElementById('form-container').style.display = 'none';
+            document.getElementById('waiting-overlay').style.display = 'block';
+
+            let timeLeft = 300; // 5 minutes
+            let timerEl = document.getElementById('countdown-timer');
+
+            countdownInterval = setInterval(() => {
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                timerEl.innerText = `Time Remaining: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    alert("Activation timeout. No incoming transaction detected on the network address.");
+                    cancelWaiting();
+                }
+                timeLeft--;
+            }, 1000);
+
+            // Live polling simulation until payment is received
+            pollTimer = setInterval(() => {
+                let successDetected = Math.random() < 0.3; // simulates blockchain detection
+                if (successDetected) {
+                    clearInterval(pollTimer);
+                    clearInterval(countdownInterval);
+                    alert("Payment received! Account activated successfully. Entering dashboard...");
+                    window.location.href = "dashboard.html";
+                }
+            }, 4000);
+        }
+
+        function cancelWaiting() {
+            clearInterval(pollTimer);
+            clearInterval(countdownInterval);
+            document.getElementById('waiting-overlay').style.display = 'none';
+            document.getElementById('form-container').style.display = 'block';
+        }
+    </script>
 </body>
 </html>
