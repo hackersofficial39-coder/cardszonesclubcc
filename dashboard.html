@@ -9,15 +9,16 @@
     <style>
         body { background-color: #0d1117; color: #c9d1d9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 0; }
         
-        header { background: #161b22; border-bottom: 1px solid #30363d; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
-        .logo-container { display: flex; align-items: center; gap: 10px; }
-        .logo-img { width: 36px; height: 36px; border-radius: 6px; object-fit: cover; border: 1px solid #30363d; background: #0d1117; }
-        .logo-text { font-size: 14px; font-weight: bold; color: #33ff33; letter-spacing: 0.5px; text-transform: uppercase; line-height: 1.1; }
+        header { background: #161b22; border-bottom: 1px solid #30363d; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+        .logo-container { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+        .logo-img { width: 34px; height: 34px; border-radius: 6px; object-fit: cover; border: 1px solid #30363d; background: #0d1117; }
+        .logo-text { font-size: 13px; font-weight: bold; color: #33ff33; letter-spacing: 0.5px; text-transform: uppercase; line-height: 1.1; }
         
-        .header-nav { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-        .nav-box { background: #21262d; border: 1px solid #30363d; color: #c9d1d9; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size: 13px; display: flex; align-items: center; gap: 5px; }
+        /* Fixed Header Nav to prevent overlapping glitch */
+        .header-nav { display: flex; align-items: center; gap: 5px; flex-wrap: nowrap; }
+        .nav-box { background: #21262d; border: 1px solid #30363d; color: #c9d1d9; padding: 5px 10px; border-radius: 6px; text-decoration: none; font-size: 12px; white-space: nowrap; }
         .nav-box:hover { background: #30363d; }
-        .logout-box { background: #21262d; border: 1px solid #f85149; color: #f85149; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: bold; }
+        .logout-box { background: #21262d; border: 1px solid #f85149; color: #f85149; padding: 5px 10px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: bold; white-space: nowrap; }
         .logout-box:hover { background: #30363d; }
 
         .container { max-width: 900px; margin: 15px auto; padding: 0 12px; box-sizing: border-box; }
@@ -37,38 +38,15 @@
         .section-title { font-size: 18px; font-weight: bold; color: #fff; margin-bottom: 4px; }
         .section-desc { font-size: 13px; color: #8b949e; margin-bottom: 12px; line-height: 1.5; }
         .rules-link { color: #f85149; text-decoration: none; font-weight: bold; }
-        .rules-link:hover { text-decoration: underline; }
 
         .filter-row { display: flex; gap: 8px; margin-bottom: 15px; }
         .filter-select { background: #161b22; border: 1px solid #30363d; color: #c9d1d9; padding: 8px 12px; border-radius: 6px; font-size: 13px; flex: 1; }
 
         .empty-dashboard { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 30px; text-align: center; color: #8b949e; }
         .empty-dashboard h3 { color: #58a6ff; margin-top: 0; }
-
-        /* White Changelog Modal on Login */
-        #update-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; justify-content: center; align-items: center; z-index: 9999; }
-        .white-popup { background: #ffffff; color: #111111; width: 90%; max-width: 500px; padding: 25px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); font-family: sans-serif; }
-        .white-popup h2 { margin-top: 0; color: #0d1117; font-size: 20px; border-bottom: 2px solid #238636; padding-bottom: 8px; }
-        .update-date { font-weight: bold; color: #d73a49; font-size: 13px; margin-bottom: 10px; }
-        .update-list { font-size: 14px; line-height: 1.6; max-height: 200px; overflow-y: auto; margin-bottom: 20px; }
-        .close-popup-btn { background: #238636; color: #fff; border: none; padding: 10px 20px; font-weight: bold; border-radius: 4px; cursor: pointer; width: 100%; }
-        .close-popup-btn:hover { background: #2ea043; }
     </style>
 </head>
 <body>
-
-    <!-- White Page Update / Changelog Notification Modal -->
-    <div id="update-modal">
-        <div class="white-popup">
-            <h2>Marketplace New Drops & Updates</h2>
-            <div class="update-date">Date: November 2026 / Active Session</div>
-            <div class="update-list">
-                <p>• <b>Verified Vendor Nodes:</b> Authorized sellers can publish items directly.</p>
-                <p>• <b>Refund Policy:</b> Active for verified claims under top-up guidelines.</p>
-            </div>
-            <button class="close-popup-btn" onclick="document.getElementById('update-modal').style.display='none'">Proceed to Dashboard</button>
-        </div>
-    </div>
 
     <header>
         <div class="logo-container">
@@ -86,7 +64,8 @@
         <input type="text" class="search-box" placeholder="Search the catalog...">
 
         <a href="deposit.html" class="action-btn">Add Funds ($25 Activation)</a>
-        <a href="seller.html" class="action-btn secondary-btn">My Orders & Vendor Terminal</a>
+        <!-- Updated to 'My Orders' as requested -->
+        <a href="seller.html" class="action-btn secondary-btn">My Orders</a>
 
         <div class="notice-card">
             <h4>Wholesale & Bulk Discount</h4>
