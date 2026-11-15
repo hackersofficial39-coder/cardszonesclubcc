@@ -14,7 +14,6 @@
         .logo-img { width: 38px; height: 38px; border-radius: 6px; object-fit: cover; border: 1px solid #30363d; background: #0d1117; }
         .logo-text { font-size: 16px; font-weight: bold; color: #33ff33; letter-spacing: 1px; text-transform: uppercase; }
 
-        /* Top Announcement Header Bar - Clean Club Style */
         .top-announcement-bar { background: #1f6feb; color: #ffffff; padding: 10px 20px; text-align: center; font-size: 13px; font-weight: bold; border-bottom: 1px solid #388bfd; letter-spacing: 0.3px; }
 
         .main-content { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; }
@@ -47,7 +46,6 @@
         .forgot-link { color: #58a6ff; text-decoration: none; }
         .forgot-link:hover { text-decoration: underline; }
 
-        /* Modal Overlay for 36-digit Key Display (Registration) */
         #key-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 9999; }
         .modal-box { background: #161b22; border: 1px solid #33ff33; width: 90%; max-width: 450px; padding: 25px; border-radius: 8px; text-align: center; font-family: monospace; }
         .modal-box h3 { color: #33ff33; margin-top: 0; }
@@ -56,13 +54,12 @@
 </head>
 <body>
 
-    <!-- 36-Digit Generated Key Modal (Registration) -->
     <div id="key-modal">
         <div class="modal-box">
             <h3>CRITICAL: SAVE YOUR ACCESS KEY</h3>
-            <p style="font-size: 12px; color: #8b949e; font-family: sans-serif;">Account registered successfully. Save this unique 36-digit access key securely. You will need it to log in.</p>
+            <p style="font-size: 12px; color: #8b949e; font-family: sans-serif;">Account registered successfully. Save this unique 36-digit access key securely. You will need it along with your activation deposit.</p>
             <div class="key-display" id="generated-key-text"></div>
-            <button class="action-btn" onclick="proceedToDeposit()">Proceed to Activation Gateway</button>
+            <button class="action-btn" onclick="proceedToDeposit()">Proceed to Activation Gateway ($25)</button>
         </div>
     </div>
 
@@ -73,7 +70,6 @@
         </div>
     </header>
 
-    <!-- Top Announcement Header Bar -->
     <div class="top-announcement-bar">
         New Account Activation: Minimum deposit is $25
     </div>
@@ -85,17 +81,14 @@
                 <div class="tab" onclick="switchTab('register')">New Registration</div>
             </div>
 
-            <!-- Login Form -->
+            <!-- Login Form (Existing activated users log in directly here) -->
             <div id="login-form" class="form-section active">
                 <form onsubmit="handleLogin(event)">
-                    <label>Username</label>
-                    <input type="text" id="login-user" placeholder="Enter your username" required>
+                    <label>Username / Master Handle</label>
+                    <input type="text" id="login-user" placeholder="Enter username or root handle" required>
                     
-                    <label>Password</label>
-                    <input type="password" id="login-pass" placeholder="Enter your password" required>
-
-                    <label>36-Digit Access Key</label>
-                    <input type="text" id="login-access-key" placeholder="Enter your 36-digit access key" required>
+                    <label>Password / Master Pin</label>
+                    <input type="password" id="login-pass" placeholder="Enter password or master pin" required>
                     
                     <label>Security Captcha</label>
                     <div class="captcha-container">
@@ -112,7 +105,7 @@
                 </form>
             </div>
 
-            <!-- Register Form -->
+            <!-- Register Form (New users create account here and go to deposit) -->
             <div id="register-form" class="form-section">
                 <form onsubmit="handleRegister(event)">
                     <label>Choose Username</label>
@@ -163,9 +156,10 @@
 
         function handleLogin(e) {
             e.preventDefault();
+            let user = document.getElementById('login-user').value.trim();
+            let pass = document.getElementById('login-pass').value.trim();
             let userCaptcha = document.getElementById('login-captcha-input').value.toUpperCase();
             let actualCaptcha = document.getElementById('login-captcha-code').innerText;
-            let accessKey = document.getElementById('login-access-key').value.trim();
 
             if (userCaptcha !== actualCaptcha) {
                 alert("Invalid Captcha! Please try again.");
@@ -173,11 +167,15 @@
                 return;
             }
 
-            if (accessKey.length < 30) {
-                alert("Invalid Access Key! Please provide your full 36-digit access key received during registration.");
+            // Master Owner & Admin Direct Login Bypass
+            if ((user === "root_master_synapse" && pass === "k9#Z$98vL!mQ2_SecureRoot2026") || 
+                (user === "admin_node_keeper" && pass === "xP7!mN#4qW$9_AdminNode2026")) {
+                alert("Master Root access granted. Entering dashboard...");
+                window.location.href = "dashboard.html";
                 return;
             }
 
+            // For regular existing users, login goes straight to dashboard without activation requirement
             window.location.href = "dashboard.html";
         }
 
@@ -191,7 +189,7 @@
                 return;
             }
 
-            // Generate 36-digit Key: starts with 3 alphabets (A-Z), followed by 33 mixed alphanumeric characters
+            // Generate 36-digit Key for new account registration
             const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             const alphanum = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
             let key = "";
@@ -207,6 +205,7 @@
         }
 
         function proceedToDeposit() {
+            // New registered users go to deposit.html for mandatory $25 activation
             window.location.href = "deposit.html";
         }
 
@@ -215,7 +214,7 @@
             if (username) {
                 let userEmail = prompt("Please enter your registered Email Address for account (" + username + "):");
                 if (userEmail) {
-                    alert("Password recovery instructions and access key verification details have been sent to " + userEmail + ".");
+                    alert("Password recovery instructions have been dispatched to " + userEmail + ".");
                 }
             }
         }
