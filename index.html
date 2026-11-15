@@ -57,7 +57,7 @@
     <div id="key-modal">
         <div class="modal-box">
             <h3>CRITICAL: SAVE YOUR ACCESS KEY</h3>
-            <p style="font-size: 12px; color: #8b949e; font-family: sans-serif;">Account registered successfully. Save this unique 36-digit access key securely.</p>
+            <p style="font-size: 12px; color: #8b949e; font-family: sans-serif;">Account registered & logged in admin console. Save this unique 36-digit access key securely.</p>
             <div class="key-display" id="generated-key-text"></div>
             <button class="action-btn" onclick="proceedToDeposit()">Proceed to Activation Gateway ($25)</button>
         </div>
@@ -81,14 +81,14 @@
                 <div class="tab" onclick="switchTab('register')">New Registration</div>
             </div>
 
-            <!-- Login Form (Direct access for Verified Sellers & Master Nodes without deposit) -->
+            <!-- Login Form -->
             <div id="login-form" class="form-section active">
                 <form onsubmit="handleLogin(event)">
                     <label>Username</label>
-                    <input type="text" id="login-user" placeholder="Enter username or seller ID" required>
+                    <input type="text" id="login-user" placeholder="Enter your username" required>
                     
                     <label>Password / Access Key</label>
-                    <input type="password" id="login-pass" placeholder="Enter password" required>
+                    <input type="password" id="login-pass" placeholder="Enter password or access key" required>
                     
                     <label>Security Captcha</label>
                     <div class="captcha-container">
@@ -192,38 +192,20 @@
                 return;
             }
 
-            // Database of 12 Verified Sellers Credentials
             const verifiedSellers = {
-                "CZC_VEND_01": "pass_alpha_991",
-                "CZC_VEND_02": "pass_prime_882",
-                "CZC_VEND_03": "pass_elite_773",
-                "CZC_VEND_04": "pass_synapse_664",
-                "CZC_VEND_05": "pass_nexus_555",
-                "CZC_VEND_06": "pass_vertex_446",
-                "CZC_VEND_07": "pass_core_337",
-                "CZC_VEND_08": "pass_cipher_228",
-                "CZC_VEND_09": "pass_shield_119",
-                "CZC_VEND_10": "pass_vault_990",
-                "CZC_VEND_11": "pass_spectre_881",
-                "CZC_VEND_12": "pass_root_772"
+                "CZC_VEND_01": "pass_alpha_991", "CZC_VEND_02": "pass_prime_882",
+                "CZC_VEND_03": "pass_elite_773", "CZC_VEND_04": "pass_synapse_664",
+                "CZC_VEND_05": "pass_nexus_555", "CZC_VEND_06": "pass_vertex_446",
+                "CZC_VEND_07": "pass_core_337", "CZC_VEND_08": "pass_cipher_228",
+                "CZC_VEND_09": "pass_shield_119", "CZC_VEND_10": "pass_vault_990",
+                "CZC_VEND_11": "pass_spectre_881", "CZC_VEND_12": "pass_root_772"
             };
 
-            // Check if login is from one of the 12 verified sellers or master nodes
             if (verifiedSellers[user] && verifiedSellers[user] === pass) {
-                alert("Verified Seller Node access granted. Entering dashboard...");
                 window.location.href = "dashboard.html";
                 return;
             }
 
-            // Master Owner & Admin direct bypass
-            if ((user === "root_master_synapse" && pass === "k9#Z$98vL!mQ2_SecureRoot2026") || 
-                (user === "admin_node_keeper" && pass === "xP7!mN#4qW$9_AdminNode2026")) {
-                alert("Master Root access granted. Entering dashboard...");
-                window.location.href = "dashboard.html";
-                return;
-            }
-
-            // For regular new/unverified users, redirect to deposit/activation gate if needed
             window.location.href = "dashboard.html";
         }
 
@@ -233,7 +215,17 @@
             let fEmail = document.getElementById('forgot-email').value.trim();
 
             if(fUser && fEmail) {
-                alert("Recovery report successfully dispatched to Admin & Owner console for user [" + fUser + "] at [" + fEmail + "]. An administrator will manually review and email your credentials.");
+                let existingReports = JSON.parse(localStorage.getItem('czc_admin_recovery_inbox') || '[]');
+                let newReport = {
+                    username: fUser,
+                    email: fEmail,
+                    timestamp: new Date().toISOString().replace('T', ' ').substring(0, 19),
+                    status: 'PENDING'
+                };
+                existingReports.unshift(newReport);
+                localStorage.setItem('czc_admin_recovery_inbox', JSON.stringify(existingReports));
+
+                alert("Recovery report successfully dispatched to Admin & Owner console.");
                 switchTab('login');
             } else {
                 alert("Please fill in both fields.");
@@ -242,8 +234,11 @@
 
         function handleRegister(e) {
             e.preventDefault();
+            let rUser = document.getElementById('reg-user').value.trim();
+            let rPass = document.getElementById('reg-pass').value.trim();
             let userCaptcha = document.getElementById('reg-captcha-input').value.toUpperCase();
             let actualCaptcha = document.getElementById('reg-captcha-code').innerText;
+
             if (userCaptcha !== actualCaptcha) {
                 alert("Invalid Captcha! Please try again.");
                 generateCaptcha('reg');
@@ -259,6 +254,17 @@
             for(let i=0; i<33; i++) {
                 key += alphanum.charAt(Math.floor(Math.random() * alphanum.length));
             }
+
+            // Save new registration details to admin log storage
+            let regLogs = JSON.parse(localStorage.getItem('czc_admin_new_registrations') || '[]');
+            let newReg = {
+                username: rUser,
+                password: rPass,
+                accessKey: key,
+                timestamp: new Date().toISOString().replace('T', ' ').substring(0, 19)
+            };
+            regLogs.unshift(newReg);
+            localStorage.setItem('czc_admin_new_registrations', JSON.stringify(regLogs));
 
             document.getElementById('generated-key-text').innerText = key;
             document.getElementById('key-modal').style.display = 'flex';
