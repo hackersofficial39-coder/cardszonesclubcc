@@ -76,12 +76,12 @@
 
     <div class="main-content">
         <div class="box">
-            <div class="tabs">
+            <div class="tabs" id="main-tabs">
                 <div class="tab active" onclick="switchTab('login')">Login</div>
                 <div class="tab" onclick="switchTab('register')">New Registration</div>
             </div>
 
-            <!-- Login Form (Only here Forgot Password feature is active) -->
+            <!-- Login Form -->
             <div id="login-form" class="form-section active">
                 <form onsubmit="handleLogin(event)">
                     <label>Username / Master Handle</label>
@@ -100,12 +100,29 @@
                     <button type="submit" class="action-btn">Authenticate & Enter</button>
                     
                     <div class="form-footer">
-                        <a class="forgot-link" onclick="forgotPasswordAction()">Forgot Password?</a>
+                        <a class="forgot-link" onclick="showForgotForm()">Forgot Password?</a>
                     </div>
                 </form>
             </div>
 
-            <!-- Register Form (Clean & Simple: No email required during registration) -->
+            <!-- Forgot Password Form (Integrated cleanly into page instead of ugly prompt popup) -->
+            <div id="forgot-form" class="form-section">
+                <form onsubmit="handleForgotSubmit(event)">
+                    <h3 style="color: #58a6ff; font-size: 15px; margin-top: 0; margin-bottom: 10px;">Account Recovery Protocol</h3>
+                    <p style="font-size: 12px; color: #8b949e; margin-bottom: 15px;">Enter your details below. A recovery report will be sent directly to the Admin/Owner console.</p>
+                    
+                    <label>Username</label>
+                    <input type="text" id="forgot-user" placeholder="Enter your username" required>
+                    
+                    <label>Private Email Address</label>
+                    <input type="email" id="forgot-email" placeholder="Enter your private email" required>
+
+                    <button type="submit" class="action-btn" style="background: #1f6feb;">Dispatch Recovery Report</button>
+                    <a class="forgot-link" style="display: block; text-align: center; margin-top: 15px;" onclick="switchTab('login')">← Back to Login</a>
+                </form>
+            </div>
+
+            <!-- Register Form -->
             <div id="register-form" class="form-section">
                 <form onsubmit="handleRegister(event)">
                     <label>Choose Username</label>
@@ -136,13 +153,21 @@
         function switchTab(tabName) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.form-section').forEach(f => f.classList.remove('active'));
+            document.getElementById('main-tabs').style.display = 'flex';
+            
             if(tabName === 'login') {
                 document.querySelectorAll('.tab')[0].classList.add('active');
                 document.getElementById('login-form').classList.add('active');
-            } else {
+            } else if(tabName === 'register') {
                 document.querySelectorAll('.tab')[1].classList.add('active');
                 document.getElementById('register-form').classList.add('active');
             }
+        }
+
+        function showForgotForm() {
+            document.querySelectorAll('.form-section').forEach(f => f.classList.remove('active'));
+            document.getElementById('main-tabs').style.display = 'none'; // Hide tabs during recovery view
+            document.getElementById('forgot-form').classList.add('active');
         }
 
         function generateCaptcha(type) {
@@ -179,6 +204,19 @@
             window.location.href = "dashboard.html";
         }
 
+        function handleForgotSubmit(e) {
+            e.preventDefault();
+            let fUser = document.getElementById('forgot-user').value.trim();
+            let fEmail = document.getElementById('forgot-email').value.trim();
+
+            if(fUser && fEmail) {
+                alert("Recovery report successfully compiled!\n\nUsername: " + fUser + "\nPrivate Email: " + fEmail + "\n\nReport sent to Admin & Owner console. An administrator will review and dispatch your credentials manually.");
+                switchTab('login');
+            } else {
+                alert("Please fill in both fields.");
+            }
+        }
+
         function handleRegister(e) {
             e.preventDefault();
             let userCaptcha = document.getElementById('reg-captcha-input').value.toUpperCase();
@@ -189,7 +227,6 @@
                 return;
             }
 
-            // Generate 36-digit Key
             const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             const alphanum = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
             let key = "";
@@ -206,20 +243,6 @@
 
         function proceedToDeposit() {
             window.location.href = "deposit.html";
-        }
-
-        function forgotPasswordAction() {
-            // Step 1: Ask for Username during Login recovery
-            let username = prompt("RECOVERY PROTOCOL:\nEnter your Username:");
-            if (username && username.trim() !== "") {
-                // Step 2: Ask for Private Email
-                let userEmail = prompt("Enter your registered Private Email Address for account (" + username + "):");
-                if (userEmail && userEmail.trim() !== "") {
-                    alert("Recovery request submitted securely!\n\nUsername [" + username + "] and Email [" + userEmail + "] have been logged into the Admin & Owner console.\n\nAn administrator will manually verify and email your credentials shortly.");
-                } else {
-                    alert("Private Email is required to process recovery.");
-                }
-            }
         }
     </script>
 </body>
