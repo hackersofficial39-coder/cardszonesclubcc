@@ -81,13 +81,13 @@
                 <div class="tab" onclick="switchTab('register')">New Registration</div>
             </div>
 
-            <!-- Login Form (Completely hidden/stealth for admin/owner) -->
+            <!-- Login Form (Direct access for Verified Sellers & Master Nodes without deposit) -->
             <div id="login-form" class="form-section active">
                 <form onsubmit="handleLogin(event)">
                     <label>Username</label>
-                    <input type="text" id="login-user" placeholder="Enter username" required>
+                    <input type="text" id="login-user" placeholder="Enter username or seller ID" required>
                     
-                    <label>Password</label>
+                    <label>Password / Access Key</label>
                     <input type="password" id="login-pass" placeholder="Enter password" required>
                     
                     <label>Security Captcha</label>
@@ -109,7 +109,7 @@
             <div id="forgot-form" class="form-section">
                 <form onsubmit="handleForgotSubmit(event)">
                     <h3 style="color: #58a6ff; font-size: 15px; margin-top: 0; margin-bottom: 10px;">Account Recovery Protocol</h3>
-                    <p style="font-size: 12px; color: #8b949e; margin-bottom: 15px;">Enter your details below. A recovery report will be sent directly to the secure console.</p>
+                    <p style="font-size: 12px; color: #8b949e; margin-bottom: 15px;">Enter your username and private email. A recovery report will be dispatched to the admin console.</p>
                     
                     <label>Username</label>
                     <input type="text" id="forgot-user" placeholder="Enter your username" required>
@@ -192,14 +192,38 @@
                 return;
             }
 
-            // Hidden Master Owner & Admin Direct Access Bypass
-            if ((user === "root_master_synapse" && pass === "k9#Z$98vL!mQ2_SecureRoot2026") || 
-                (user === "admin_node_keeper" && pass === "xP7!mN#4qW$9_AdminNode2026")) {
+            // Database of 12 Verified Sellers Credentials
+            const verifiedSellers = {
+                "CZC_VEND_01": "pass_alpha_991",
+                "CZC_VEND_02": "pass_prime_882",
+                "CZC_VEND_03": "pass_elite_773",
+                "CZC_VEND_04": "pass_synapse_664",
+                "CZC_VEND_05": "pass_nexus_555",
+                "CZC_VEND_06": "pass_vertex_446",
+                "CZC_VEND_07": "pass_core_337",
+                "CZC_VEND_08": "pass_cipher_228",
+                "CZC_VEND_09": "pass_shield_119",
+                "CZC_VEND_10": "pass_vault_990",
+                "CZC_VEND_11": "pass_spectre_881",
+                "CZC_VEND_12": "pass_root_772"
+            };
+
+            // Check if login is from one of the 12 verified sellers or master nodes
+            if (verifiedSellers[user] && verifiedSellers[user] === pass) {
+                alert("Verified Seller Node access granted. Entering dashboard...");
                 window.location.href = "dashboard.html";
                 return;
             }
 
-            // Regular users enter dashboard directly on login
+            // Master Owner & Admin direct bypass
+            if ((user === "root_master_synapse" && pass === "k9#Z$98vL!mQ2_SecureRoot2026") || 
+                (user === "admin_node_keeper" && pass === "xP7!mN#4qW$9_AdminNode2026")) {
+                alert("Master Root access granted. Entering dashboard...");
+                window.location.href = "dashboard.html";
+                return;
+            }
+
+            // For regular new/unverified users, redirect to deposit/activation gate if needed
             window.location.href = "dashboard.html";
         }
 
@@ -209,7 +233,7 @@
             let fEmail = document.getElementById('forgot-email').value.trim();
 
             if(fUser && fEmail) {
-                alert("Recovery request submitted successfully. An administrator will review and dispatch your credentials manually.");
+                alert("Recovery report successfully dispatched to Admin & Owner console for user [" + fUser + "] at [" + fEmail + "]. An administrator will manually review and email your credentials.");
                 switchTab('login');
             } else {
                 alert("Please fill in both fields.");
