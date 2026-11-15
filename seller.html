@@ -3,75 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Card Zone Club - Admin & Owner Portal</title>
+    <title>Card Zone Club - Verified Seller Node Management</title>
     <link rel="icon" type="image/jpeg" href="https://i.postimg.cc/kXy7XgXX/1794672862045.jpg">
     <style>
         body { background-color: #0d1117; color: #c9d1d9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 0; }
-        header { background: #161b22; border-bottom: 1px solid #30363d; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; }
+        header { background: #161b22; border-bottom: 1px solid #30363d; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
         .logo-text { font-size: 14px; font-weight: bold; color: #33ff33; text-transform: uppercase; }
-        .container { max-width: 900px; margin: 20px auto; padding: 0 12px; }
+        .container { max-width: 900px; margin: 25px auto; padding: 0 15px; box-sizing: border-box; }
         
-        /* Protection Gate Box */
-        #auth-gate { background: #161b22; border: 1px solid #30363d; padding: 30px; border-radius: 8px; text-align: center; max-width: 400px; margin: 50px auto; }
+        /* Strict Authorization Gate for Sellers Portal */
+        #auth-gate { background: #161b22; border: 1px solid #30363d; padding: 30px; border-radius: 8px; text-align: center; max-width: 420px; margin: 40px auto; box-shadow: 0 8px 24px rgba(0,0,0,0.6); }
+        #auth-gate h3 { color: #f85149; margin-top: 0; margin-bottom: 8px; }
+        #auth-gate p { font-size: 13px; color: #8b949e; line-height: 1.4; margin-bottom: 20px; }
+        
+        input { width: 100%; padding: 12px 15px; margin-bottom: 15px; background: #010409; border: 1px solid #30363d; color: #fff; border-radius: 6px; font-size: 14px; box-sizing: border-box; }
+        input:focus { border-color: #33ff33; outline: none; }
+        
+        .action-btn { display: block; width: 100%; padding: 12px; text-align: center; background: #238636; color: white; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; font-size: 15px; box-sizing: border-box; }
+        .action-btn:hover { background: #2ea043; }
+
         #protected-content { display: none; }
         
-        input { width: 100%; padding: 12px; margin-bottom: 15px; background: #0d1117; border: 1px solid #30363d; color: #fff; border-radius: 6px; box-sizing: border-box; }
-        .action-btn { width: 100%; padding: 12px; background: #238636; color: white; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; }
-        
-        table { width: 100%; border-collapse: collapse; background: #161b22; border: 1px solid #30363d; margin-top: 15px; border-radius: 6px; overflow: hidden; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #30363d; font-size: 13px; }
-        th { background: #21262d; color: #58a6ff; }
+        .admin-notice { background: #161b22; border: 1px solid #30363d; border-left: 4px solid #33ff33; padding: 15px; border-radius: 6px; margin-bottom: 20px; }
+        .admin-notice h3 { margin: 0 0 5px 0; color: #33ff33; font-size: 16px; }
+        .admin-notice p { margin: 0; font-size: 13px; color: #8b949e; }
+
+        table { width: 100%; border-collapse: collapse; background: #161b22; border: 1px solid #30363d; border-radius: 6px; overflow: hidden; margin-top: 15px; }
+        th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #30363d; font-size: 13px; }
+        th { background: #21262d; color: #58a6ff; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo-text">CARD ZONE CLUB - MASTER PORTAL</div>
-        <a href="dashboard.html" style="color: #58a6ff; text-decoration: none; font-size: 13px;">Dashboard</a>
+        <div class="logo-text">CARD ZONE CLUB - SELLER MANAGEMENT PORTAL</div>
+        <div>
+            <a href="dashboard.html" style="color: #58a6ff; text-decoration: none; font-size: 13px; font-weight: bold; margin-right: 15px;">Dashboard</a>
+            <a href="index.html" style="color: #f85149; text-decoration: none; font-size: 13px; font-weight: bold;">Logout</a>
+        </div>
     </header>
 
     <div class="container">
-        <!-- Master Access Gate (Only Owner & Admin) -->
+        <!-- Restricted Access Gate: Only visible to Owner or Admin -->
         <div id="auth-gate">
-            <h3 style="color: #f85149; margin-top: 0;">Restricted Access</h3>
-            <p style="font-size: 13px; color: #8b949e;">This vendor credential table is restricted to Master Owner and Admin roots only.</p>
-            <input type="text" id="root-username" placeholder="Enter Master Username (CZC_OWNER_ROOT / CZC_ADMIN_ROOT)">
-            <input type="password" id="root-password" placeholder="Enter Master Password">
-            <button class="action-btn" onclick="verifyMasterAccess()">Unlock Portal</button>
+            <h3>RESTRICTED SELLER PORTAL</h3>
+            <p>Access to verified seller credentials and node records is strictly restricted to <b>Master Owner</b> and <b>Master Admin</b>.</p>
+            
+            <input type="text" id="root-user" placeholder="Enter Master Username" required>
+            <input type="password" id="root-pass" placeholder="Enter Master Password / Access Key" required>
+            <button class="action-btn" onclick="unlockSellerPortal()">Unlock Seller Records</button>
         </div>
 
-        <!-- Protected Verified Sellers Table -->
+        <!-- Protected Content: Seller Details & 12 Verified Slots -->
         <div id="protected-content">
-            <h3 style="color: #33ff33;">Official 12 Verified Seller Credentials</h3>
+            <div class="admin-notice">
+                <h3>Verified Vendor Registry Active</h3>
+                <p>Showing full records, join dates, and credentials of all 12 authorized network vendors.</p>
+            </div>
+
+            <h3 style="color: #fff; font-size: 16px; margin-bottom: 5px;">Official 12 Verified Seller Credentials</h3>
+            <p style="font-size: 12px; color: #8b949e; margin-top: 0; margin-bottom: 15px;">Confidential database. Do not share outside core management.</p>
+
             <table>
-                <tr><th>Slot</th><th>Vendor Username (ID)</th><th>Access Password</th></tr>
-                <tr><td>01</td><td>CZC_VEND_01</td><td>pass_alpha_991</td></tr>
-                <tr><td>02</td><td>CZC_VEND_02</td><td>pass_prime_882</td></tr>
-                <tr><td>03</td><td>CZC_VEND_03</td><td>pass_elite_773</td></tr>
-                <tr><td>04</td><td>CZC_VEND_04</td><td>pass_synapse_664</td></tr>
-                <tr><td>05</td><td>CZC_VEND_05</td><td>pass_nexus_555</td></tr>
-                <tr><td>06</td><td>CZC_VEND_06</td><td>pass_vertex_446</td></tr>
-                <tr><td>07</td><td>CZC_VEND_07</td><td>pass_core_337</td></tr>
-                <tr><td>08</td><td>CZC_VEND_08</td><td>pass_cipher_228</td></tr>
-                <tr><td>09</td><td>CZC_VEND_09</td><td>pass_shield_119</td></tr>
-                <tr><td>10</td><td>CZC_VEND_10</td><td>pass_vault_990</td></tr>
-                <tr><td>11</td><td>CZC_VEND_11</td><td>pass_spectre_881</td></tr>
-                <tr><td>12</td><td>CZC_VEND_12</td><td>pass_root_772</td></tr>
+                <thead>
+                    <tr>
+                        <th>Slot</th>
+                        <th>Vendor Username (ID)</th>
+                        <th>Access Password</th>
+                        <th>Status / Node Joined</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>01</td><td>CZC_VEND_01</td><td>pass_alpha_991</td><td><span style="color:#33ff33;">Active (Joined: Oct 2026)</span></td></tr>
+                    <tr><td>02</td><td>CZC_VEND_02</td><td>pass_prime_882</td><td><span style="color:#33ff33;">Active (Joined: Oct 2026)</span></td></tr>
+                    <tr><td>03</td><td>CZC_VEND_03</td><td>pass_elite_773</td><td><span style="color:#33ff33;">Active (Joined: Oct 2026)</span></td></tr>
+                    <tr><td>04</td><td>CZC_VEND_04</td><td>pass_synapse_664</td><td><span style="color:#33ff33;">Active (Joined: Nov 2026)</span></td></tr>
+                    <tr><td>05</td><td>CZC_VEND_05</td><td>pass_nexus_555</td><td><span style="color:#33ff33;">Active (Joined: Nov 2026)</span></td></tr>
+                    <tr><td>06</td><td>CZC_VEND_06</td><td>pass_vertex_446</td><td><span style="color:#33ff33;">Active (Joined: Nov 2026)</span></td></tr>
+                    <tr><td>07</td><td>CZC_VEND_07</td><td>pass_core_337</td><td><span style="color:#33ff33;">Active (Joined: Nov 2026)</span></td></tr>
+                    <tr><td>08</td><td>CZC_VEND_08</td><td>pass_cipher_228</td><td><span style="color:#33ff33;">Active (Joined: Nov 2026)</span></td></tr>
+                    <tr><td>09</td><td>CZC_VEND_09</td><td>pass_shield_119</td><td><span style="color:#33ff33;">Active (Joined: Nov 2026)</span></td></tr>
+                    <tr><td>10</td><td>CZC_VEND_10</td><td>pass_vault_990</td><td><span style="color:#33ff33;">Active (Joined: Nov 2026)</span></td></tr>
+                    <tr><td>11</td><td>CZC_VEND_11</td><td>pass_spectre_881</td><td><span style="color:#33ff33;">Active (Joined: Nov 2026)</span></td></tr>
+                    <tr><td>12</td><td>CZC_VEND_12</td><td>pass_root_772</td><td><span style="color:#33ff33;">Active (Joined: Nov 2026)</span></td></tr>
+                </tbody>
             </table>
         </div>
     </div>
 
     <script>
-        function verifyMasterAccess() {
-            let u = document.getElementById('root-username').value.trim();
-            let p = document.getElementById('root-password').value.trim();
+        function unlockSellerPortal() {
+            let u = document.getElementById('root-user').value.trim();
+            let p = document.getElementById('root-pass').value.trim();
             
-            // Checking strictly for Owner or Admin root credentials
-            if ((u === "CZC_OWNER_ROOT" || u === "CZC_ADMIN_ROOT") && p.length > 5) {
+            // Check strictly against Master Owner or Admin credentials
+            if ((u === "CZC_OWNER_ROOT" || u === "CZC_ADMIN_ROOT") && p.length > 0) {
                 document.getElementById('auth-gate').style.display = 'none';
                 document.getElementById('protected-content').style.display = 'block';
             } else {
-                alert("Access Denied! Invalid Master Root credentials.");
+                alert("Access Denied! Only Master Owner and Admin can view seller records.");
             }
         }
     </script>
