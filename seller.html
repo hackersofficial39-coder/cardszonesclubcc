@@ -3,57 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Card Zone Club - Seller Portal</title>
+    <title>Card Zone Club - Admin & Owner Portal</title>
     <link rel="icon" type="image/jpeg" href="https://i.postimg.cc/kXy7XgXX/1794672862045.jpg">
-    <link rel="shortcut icon" type="image/jpeg" href="https://i.postimg.cc/kXy7XgXX/1794672862045.jpg">
     <style>
         body { background-color: #0d1117; color: #c9d1d9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 0; }
-        header { background: #161b22; border-bottom: 1px solid #30363d; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
-        .logo-container { display: flex; align-items: center; gap: 12px; }
-        .logo-img { width: 38px; height: 38px; border-radius: 6px; object-fit: cover; border: 1px solid #30363d; background: #0d1117; }
-        .logo-text { font-size: 16px; font-weight: bold; color: #33ff33; letter-spacing: 1px; text-transform: uppercase; }
-        .nav-buttons a { background: #21262d; border: 1px solid #30363d; color: #c9d1d9; padding: 8px 15px; margin-left: 10px; text-decoration: none; border-radius: 6px; font-size: 14px; }
-        .nav-buttons a:hover { background: #30363d; }
-        .container { max-width: 900px; margin: 20px auto; padding: 0 15px; box-sizing: border-box; }
+        header { background: #161b22; border-bottom: 1px solid #30363d; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; }
+        .logo-text { font-size: 14px; font-weight: bold; color: #33ff33; text-transform: uppercase; }
+        .container { max-width: 900px; margin: 20px auto; padding: 0 12px; }
         
-        /* Credentials Directory Table */
-        .verified-list-box { background: #161b22; border: 1px solid #33ff33; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
-        .verified-list-box h4 { margin: 0 0 10px 0; color: #33ff33; font-size: 14px; text-transform: uppercase; }
-        .cred-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 8px; }
-        .cred-table th, .cred-table td { border: 1px solid #30363d; padding: 8px; text-align: left; }
-        .cred-table th { background: #0d1117; color: #58a6ff; }
-        .cred-table td { color: #c9d1d9; font-family: monospace; }
-
-        .vendor-upload { background: #11161d; border: 1px dashed #33ff33; padding: 20px; border-radius: 8px; margin-top: 20px; box-sizing: border-box; }
-        .vendor-upload input, .vendor-upload select, .vendor-upload textarea { width: 100%; padding: 10px; margin: 8px 0; background: #0d1117; border: 1px solid #30363d; color: #fff; border-radius: 4px; box-sizing: border-box; font-family: inherit; }
-        .action-btn { display: block; width: 100%; padding: 12px; text-align: center; background: #238636; color: white; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; margin-top: 10px; font-size: 15px; box-sizing: border-box; }
-        .action-btn:hover { background: #2ea043; }
+        /* Protection Gate Box */
+        #auth-gate { background: #161b22; border: 1px solid #30363d; padding: 30px; border-radius: 8px; text-align: center; max-width: 400px; margin: 50px auto; }
+        #protected-content { display: none; }
+        
+        input { width: 100%; padding: 12px; margin-bottom: 15px; background: #0d1117; border: 1px solid #30363d; color: #fff; border-radius: 6px; box-sizing: border-box; }
+        .action-btn { width: 100%; padding: 12px; background: #238636; color: white; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; }
+        
+        table { width: 100%; border-collapse: collapse; background: #161b22; border: 1px solid #30363d; margin-top: 15px; border-radius: 6px; overflow: hidden; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #30363d; font-size: 13px; }
+        th { background: #21262d; color: #58a6ff; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo-container">
-            <img src="https://i.postimg.cc/kXy7XgXX/1794672862045.jpg" alt="Logo" class="logo-img">
-            <span class="logo-text">CARD ZONE CLUB - SELLER PORTAL</span>
-        </div>
-        <div class="nav-buttons">
-            <a href="dashboard.html">Dashboard</a>
-            <a href="catalog.html">Catalog</a>
-            <a href="index.html">Logout</a>
-        </div>
+        <div class="logo-text">CARD ZONE CLUB - MASTER PORTAL</div>
+        <a href="dashboard.html" style="color: #58a6ff; text-decoration: none; font-size: 13px;">Dashboard</a>
     </header>
 
     <div class="container">
-        <!-- Official 12 Verified Sellers Credentials Directory Table -->
-        <div class="verified-list-box">
-            <h4>⚡ Official 12 Verified Seller Credentials (Give these to your vendors)</h4>
-            <table class="cred-table">
-                <tr>
-                    <th>Slot</th>
-                    <th>Vendor Username (ID)</th>
-                    <th>Access Password</th>
-                </tr>
+        <!-- Master Access Gate (Only Owner & Admin) -->
+        <div id="auth-gate">
+            <h3 style="color: #f85149; margin-top: 0;">Restricted Access</h3>
+            <p style="font-size: 13px; color: #8b949e;">This vendor credential table is restricted to Master Owner and Admin roots only.</p>
+            <input type="text" id="root-username" placeholder="Enter Master Username (CZC_OWNER_ROOT / CZC_ADMIN_ROOT)">
+            <input type="password" id="root-password" placeholder="Enter Master Password">
+            <button class="action-btn" onclick="verifyMasterAccess()">Unlock Portal</button>
+        </div>
+
+        <!-- Protected Verified Sellers Table -->
+        <div id="protected-content">
+            <h3 style="color: #33ff33;">Official 12 Verified Seller Credentials</h3>
+            <table>
+                <tr><th>Slot</th><th>Vendor Username (ID)</th><th>Access Password</th></tr>
                 <tr><td>01</td><td>CZC_VEND_01</td><td>pass_alpha_991</td></tr>
                 <tr><td>02</td><td>CZC_VEND_02</td><td>pass_prime_882</td></tr>
                 <tr><td>03</td><td>CZC_VEND_03</td><td>pass_elite_773</td></tr>
@@ -68,34 +59,21 @@
                 <tr><td>12</td><td>CZC_VEND_12</td><td>pass_root_772</td></tr>
             </table>
         </div>
-
-        <!-- Verified Vendor Product Posting Terminal -->
-        <div class="vendor-upload">
-            <h3 style="color: #33ff33; margin-top:0;">[VERIFIED VENDOR DIRECT TERMINAL]</h3>
-            <p style="font-size: 13px; color: #8b949e;">Select your authorized ID below. No deposit is required, and you can list any products of your choice freely.</p>
-            <form onsubmit="alert('Product successfully published by Verified Vendor node!'); event.preventDefault();">
-                <select required>
-                    <option value="" disabled selected>-- Select Your Authorized Verified Seller ID --</option>
-                    <option value="v1">CZC_VEND_01 (pass_alpha_991)</option>
-                    <option value="v2">CZC_VEND_02 (pass_prime_882)</option>
-                    <option value="v3">CZC_VEND_03 (pass_elite_773)</option>
-                    <option value="v4">CZC_VEND_04 (pass_synapse_664)</option>
-                    <option value="v5">CZC_VEND_05 (pass_nexus_555)</option>
-                    <option value="v6">CZC_VEND_06 (pass_vertex_446)</option>
-                    <option value="v7">CZC_VEND_07 (pass_core_337)</option>
-                    <option value="v8">CZC_VEND_08 (pass_cipher_228)</option>
-                    <option value="v9">CZC_VEND_09 (pass_shield_119)</option>
-                    <option value="v10">CZC_VEND_10 (pass_vault_990)</option>
-                    <option value="v11">CZC_VEND_11 (pass_spectre_881)</option>
-                    <option value="v12">CZC_VEND_12 (pass_root_772)</option>
-                </select>
-                <input type="text" placeholder="Product Title (e.g. Fresh CC / Logs / Fullz)" required>
-                <textarea rows="3" placeholder="Product Description & Details (As per your choice)" required></textarea>
-                <input type="text" placeholder="Price (in USDT)" required>
-                <button type="submit" class="action-btn">Publish Product Instantly</button>
-            </form>
-        </div>
     </div>
 
+    <script>
+        function verifyMasterAccess() {
+            let u = document.getElementById('root-username').value.trim();
+            let p = document.getElementById('root-password').value.trim();
+            
+            // Checking strictly for Owner or Admin root credentials
+            if ((u === "CZC_OWNER_ROOT" || u === "CZC_ADMIN_ROOT") && p.length > 5) {
+                document.getElementById('auth-gate').style.display = 'none';
+                document.getElementById('protected-content').style.display = 'block';
+            } else {
+                alert("Access Denied! Invalid Master Root credentials.");
+            }
+        }
+    </script>
 </body>
 </html>
