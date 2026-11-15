@@ -6,32 +6,32 @@
     <title>SYS-NODE-X99 // SECURE MASTER TERMINAL</title>
     <style>
         :root {
-            --bg-base: #090d16;
-            --panel-bg: #111827;
-            --border-col: #1f2937;
+            --bg-base: #060911;
+            --panel-bg: #0f172a;
+            --border-col: #1e293b;
             --accent-green: #10b981;
             --accent-red: #ef4444;
             --accent-blue: #3b82f6;
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Courier New', Courier, monospace; }
         body { background-color: var(--bg-base); color: var(--text-main); padding: 15px; font-size: 13px; line-height: 1.4; }
 
         #auth-screen { display: flex; justify-content: center; align-items: center; min-height: 90vh; }
-        .terminal-auth-box { background: var(--panel-bg); border: 1px solid var(--border-col); padding: 25px; max-width: 400px; width: 100%; border-radius: 6px; box-shadow: 0 10px 30px rgba(0,0,0,0.7); }
-        .auth-title { font-size: 1rem; color: var(--accent-red); letter-spacing: 1.5px; text-transform: uppercase; text-align: center; margin-bottom: 15px; font-weight: bold; }
-        .auth-banner { background: rgba(239, 68, 68, 0.08); border: 1px solid var(--accent-red); padding: 10px; font-size: 0.7rem; color: #fca5a5; margin-bottom: 20px; border-radius: 4px; }
+        .terminal-auth-box { background: var(--panel-bg); border: 1px solid var(--border-col); padding: 25px; max-width: 400px; width: 100%; border-radius: 6px; box-shadow: 0 15px 35px rgba(0,0,0,0.8); }
+        .auth-title { font-size: 1rem; color: var(--accent-red); letter-spacing: 2px; text-transform: uppercase; text-align: center; margin-bottom: 15px; font-weight: bold; }
+        .auth-banner { background: rgba(239, 68, 68, 0.08); border: 1px solid var(--accent-red); padding: 10px; font-size: 0.72rem; color: #fca5a5; margin-bottom: 20px; border-radius: 4px; }
         
-        .form-group { margin-bottom: 12px; }
-        label { display: block; font-size: 0.7rem; color: var(--text-muted); margin-bottom: 4px; text-transform: uppercase; }
-        input, select { width: 100%; background: #030712; border: 1px solid var(--border-col); padding: 10px; color: var(--accent-green); font-size: 0.85rem; border-radius: 4px; outline: none; }
+        .form-group { margin-bottom: 14px; }
+        label { display: block; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 5px; text-transform: uppercase; }
+        input, select { width: 100%; background: #020617; border: 1px solid var(--border-col); padding: 11px; color: var(--accent-green); font-size: 0.85rem; border-radius: 4px; outline: none; }
         input:focus { border-color: var(--accent-green); }
-        .btn-core { width: 100%; background: var(--accent-red); color: #fff; border: none; padding: 11px; font-weight: bold; cursor: pointer; font-size: 0.8rem; text-transform: uppercase; margin-top: 10px; border-radius: 4px; transition: background 0.2s; }
+        .btn-core { width: 100%; background: var(--accent-red); color: #fff; border: none; padding: 12px; font-weight: bold; cursor: pointer; font-size: 0.82rem; text-transform: uppercase; margin-top: 10px; border-radius: 4px; }
         .btn-core:hover { background: #dc2626; }
 
         #dashboard-screen { display: none; }
-        header { background: var(--panel-bg); border: 1px solid var(--border-col); padding: 12px 18px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; border-radius: 6px; flex-wrap: wrap; gap: 10px; }
+        header { background: var(--panel-bg); border: 1px solid var(--border-col); padding: 14px 18px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; border-radius: 6px; flex-wrap: wrap; gap: 10px; }
         .brand-title { color: var(--accent-green); font-weight: bold; font-size: 0.85rem; letter-spacing: 1px; }
         nav a { color: var(--accent-blue); text-decoration: none; margin-left: 12px; font-size: 0.8rem; }
         nav a:hover { text-decoration: underline; }
@@ -39,26 +39,26 @@
         .dashboard-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-bottom: 20px; }
         @media(min-width: 768px) { .dashboard-grid { grid-template-columns: repeat(2, 1fr); } }
 
-        .panel-box { background: var(--panel-bg); border: 1px solid var(--border-col); padding: 18px; border-radius: 6px; margin-bottom: 15px; overflow: hidden; }
-        .panel-header { font-size: 0.8rem; color: #fff; font-weight: bold; margin-bottom: 12px; text-transform: uppercase; border-bottom: 1px solid var(--border-col); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .panel-box { background: var(--panel-bg); border: 1px solid var(--border-col); padding: 18px; border-radius: 6px; margin-bottom: 18px; width: 100%; overflow: hidden; }
+        .panel-header { font-size: 0.82rem; color: #fff; font-weight: bold; margin-bottom: 14px; text-transform: uppercase; border-bottom: 1px solid var(--border-col); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 5px; }
         
-        .metric-row { display: flex; justify-content: space-between; font-size: 0.78rem; margin-bottom: 8px; color: var(--text-muted); }
+        .metric-row { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 9px; color: var(--text-muted); }
         .metric-val { color: var(--accent-green); font-weight: bold; }
 
-        .table-responsive { width: 100%; overflow-x: auto; margin-top: 10px; border: 1px solid var(--border-col); border-radius: 4px; }
-        table { width: 100%; border-collapse: collapse; white-space: nowrap; background: #030712; }
-        th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border-col); font-size: 0.75rem; }
-        th { background: #1f2937; color: var(--accent-blue); text-transform: uppercase; font-weight: bold; }
+        .table-container { width: 100%; overflow-x: auto; margin-top: 8px; border: 1px solid var(--border-col); border-radius: 4px; background: #020617; }
+        table { width: 100%; border-collapse: collapse; text-align: left; white-space: nowrap; }
+        th, td { padding: 10px 14px; border-bottom: 1px solid var(--border-col); font-size: 0.78rem; }
+        th { background: #1e293b; color: var(--accent-blue); text-transform: uppercase; font-weight: bold; }
         tr:last-child td { border-bottom: none; }
 
-        .action-pill { padding: 5px 10px; font-size: 0.7rem; font-weight: bold; border: none; border-radius: 3px; cursor: pointer; text-transform: uppercase; }
-        .pill-on { background: #065f46; color: #34d399; }
-        .pill-off { background: #7f1d1d; color: #f87171; }
+        .action-pill { padding: 5px 10px; font-size: 0.72rem; font-weight: bold; border: none; border-radius: 3px; cursor: pointer; text-transform: uppercase; }
+        .pill-online { background: #065f46; color: #34d399; }
+        .pill-offline { background: #334155; color: #94a3b8; }
         .pill-kick { background: #991b1b; color: #fca5a5; margin-left: 4px; }
 
-        .global-banner { background: var(--panel-bg); border: 1px solid var(--border-col); padding: 15px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
+        .global-banner { background: var(--panel-bg); border: 1px solid var(--border-col); padding: 16px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
         
-        footer { margin-top: 25px; text-align: center; font-size: 0.7rem; color: var(--text-muted); border-top: 1px solid var(--border-col); padding-top: 12px; }
+        footer { margin-top: 25px; text-align: center; font-size: 0.72rem; color: var(--text-muted); border-top: 1px solid var(--border-col); padding-top: 14px; }
     </style>
 </head>
 <body>
@@ -89,7 +89,7 @@
     <!-- Dashboard Screen -->
     <div id="dashboard-screen">
         <header>
-            <div class="brand-title">[ ROOT TERMINAL // LIVE MONITORING & CONTROLS ]</div>
+            <div class="brand-title">[ ROOT TERMINAL // LIVE MONITORING ]</div>
             <nav>
                 <a href="dashboard.html">Dashboard</a>
                 <a href="catalog.html">Marketplace</a>
@@ -101,10 +101,10 @@
             <!-- Global Control Banner -->
             <div class="global-banner">
                 <div>
-                    <strong style="color: #fff; font-size: 0.8rem; display: block; margin-bottom: 2px;">Global Vendor Partner Program Portal</strong>
-                    <span style="font-size: 0.72rem; color: var(--text-muted);" id="reg-status-desc">Status: Accepting new partner vendor requests.</span>
+                    <strong style="color: #fff; font-size: 0.82rem; display: block; margin-bottom: 2px;">Global Vendor Partner Program Portal</strong>
+                    <span style="font-size: 0.75rem; color: var(--text-muted);" id="reg-status-desc">Status: Accepting new partner vendor requests.</span>
                 </div>
-                <button id="global-reg-btn" class="action-pill pill-on" onclick="toggleGlobalRegistration()">PORTAL ACTIVE (ON)</button>
+                <button id="global-reg-btn" class="action-pill pill-online" onclick="toggleGlobalRegistration()">PORTAL ACTIVE (ON)</button>
             </div>
 
             <!-- Analytics & Monitoring Grid -->
@@ -127,21 +127,21 @@
                 </div>
             </div>
 
-            <!-- New Account Registrations Log -->
+            <!-- Complete User Accounts & Registration Logs (All registered users, passwords & access keys) -->
             <div class="panel-box">
                 <div class="panel-header">
-                    <span>New Account Registrations Log</span>
-                    <span style="font-size: 0.72rem; color: var(--accent-green);" id="reg-logs-count">0 Records</span>
+                    <span>Registered User Accounts & Deposit Logs</span>
+                    <span style="font-size: 0.75rem; color: var(--accent-green);" id="reg-logs-count">0 Records</span>
                 </div>
-                <div class="table-responsive">
+                <div class="table-container">
                     <table>
                         <thead>
                             <tr>
                                 <th>Timestamp</th>
                                 <th>Username</th>
-                                <th>Password</th>
+                                <th>Account Password</th>
                                 <th>36-Digit Access Key</th>
-                                <th>Status</th>
+                                <th>Activation Status ($25)</th>
                             </tr>
                         </thead>
                         <tbody id="reg-logs-table-body">
@@ -151,19 +151,19 @@
                 </div>
             </div>
 
-            <!-- Admin Inbox / Recovery Reports -->
+            <!-- Admin Inbox // Password Recovery Reports -->
             <div class="panel-box">
                 <div class="panel-header">
                     <span>Admin Inbox // Password Recovery Reports</span>
-                    <span style="font-size: 0.72rem; color: var(--accent-green);" id="inbox-count">0 Tickets</span>
+                    <span style="font-size: 0.75rem; color: var(--accent-green);" id="inbox-count">0 Tickets</span>
                 </div>
-                <div class="table-responsive">
+                <div class="table-container">
                     <table>
                         <thead>
                             <tr>
                                 <th>Timestamp</th>
                                 <th>Target Username</th>
-                                <th>Private Email</th>
+                                <th>Private Email (For Email Dispatch)</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -175,21 +175,21 @@
                 </div>
             </div>
 
-            <!-- Verified Sellers Management -->
+            <!-- Official Verified Sellers Management -->
             <div class="panel-box">
                 <div class="panel-header">
-                    <span>Official Verified Sellers Management & Kick Control</span>
-                    <span style="font-size: 0.72rem; color: var(--text-muted);">Partner Control</span>
+                    <span>Official Verified Sellers Management</span>
+                    <span style="font-size: 0.75rem; color: var(--text-muted);">Real-time Status & Kick Control</span>
                 </div>
-                <div class="table-responsive">
+                <div class="table-container">
                     <table>
                         <thead>
                             <tr>
                                 <th>Slot</th>
                                 <th>Vendor ID</th>
                                 <th>Password</th>
-                                <th>Status Control</th>
-                                <th>Action</th>
+                                <th>Live Status (Seller Controlled)</th>
+                                <th>Admin Action</th>
                             </tr>
                         </thead>
                         <tbody id="seller-table-body"></tbody>
@@ -205,18 +205,18 @@
         let globalRegistrationActive = true;
 
         let sellers = [
-            { id: "CZC_VEND_01", pass: "pass_alpha_991", active: true },
-            { id: "CZC_VEND_02", pass: "pass_prime_882", active: true },
-            { id: "CZC_VEND_03", pass: "pass_elite_773", active: true },
-            { id: "CZC_VEND_04", pass: "pass_synapse_664", active: true },
-            { id: "CZC_VEND_05", pass: "pass_nexus_555", active: true },
-            { id: "CZC_VEND_06", pass: "pass_vertex_446", active: true },
-            { id: "CZC_VEND_07", pass: "pass_core_337", active: true },
-            { id: "CZC_VEND_08", pass: "pass_cipher_228", active: true },
-            { id: "CZC_VEND_09", pass: "pass_shield_119", active: true },
-            { id: "CZC_VEND_10", pass: "pass_vault_990", active: true },
-            { id: "CZC_VEND_11", pass: "pass_spectre_881", active: true },
-            { id: "CZC_VEND_12", pass: "pass_root_772", active: true }
+            { id: "CZC_VEND_01", pass: "pass_alpha_991", online: true },
+            { id: "CZC_VEND_02", pass: "pass_prime_882", online: true },
+            { id: "CZC_VEND_03", pass: "pass_elite_773", online: false },
+            { id: "CZC_VEND_04", pass: "pass_synapse_664", online: true },
+            { id: "CZC_VEND_05", pass: "pass_nexus_555", online: true },
+            { id: "CZC_VEND_06", pass: "pass_vertex_446", online: false },
+            { id: "CZC_VEND_07", pass: "pass_core_337", online: true },
+            { id: "CZC_VEND_08", pass: "pass_cipher_228", online: true },
+            { id: "CZC_VEND_09", pass: "pass_shield_119", online: false },
+            { id: "CZC_VEND_10", pass: "pass_vault_990", online: true },
+            { id: "CZC_VEND_11", pass: "pass_spectre_881", online: true },
+            { id: "CZC_VEND_12", pass: "pass_root_772", online: true }
         ];
 
         function renderSellers() {
@@ -233,12 +233,12 @@
                     <td style="font-weight:bold; color:var(--accent-blue);">${s.id}</td>
                     <td>${s.pass}</td>
                     <td>
-                        <button class="action-pill ${s.active ? 'pill-on' : 'pill-off'}" onclick="toggleSeller(${index})">
-                            ${s.active ? 'ONLINE' : 'OFFLINE'}
-                        </button>
+                        <span class="action-pill ${s.online ? 'pill-online' : 'pill-offline'}">
+                            ${s.online ? 'ONLINE (ACTIVE)' : 'OFFLINE (AWAY)'}
+                        </span>
                     </td>
                     <td>
-                        <button class="action-pill pill-kick" onclick="kickSeller(${index})">KICK</button>
+                        <button class="action-pill pill-kick" onclick="kickSeller(${index})">KICK / REMOVE</button>
                     </td>
                 `;
                 tbody.appendChild(row);
@@ -247,7 +247,7 @@
 
         function kickSeller(index) {
             let vendorId = sellers[index].id;
-            if (confirm("Confirm removal and revocation of vendor: " + vendorId + "?")) {
+            if (confirm("CRITICAL: Permanently revoke and remove " + vendorId + " from partner network?")) {
                 sellers.splice(index, 1);
                 renderSellers();
             }
@@ -271,7 +271,7 @@
                     <td style="font-weight:bold; color:var(--accent-blue);">${log.username}</td>
                     <td style="color:#fca5a5;">${log.password}</td>
                     <td style="color:var(--accent-green);">${log.accessKey}</td>
-                    <td><span style="background:rgba(16,185,129,0.15); color:var(--accent-green); padding:2px 6px; border-radius:3px;">PENDING</span></td>
+                    <td><span style="background:rgba(16,185,129,0.15); color:var(--accent-green); padding:2px 6px; border-radius:3px;">PENDING $25 DEPOSIT</span></td>
                 `;
                 regBody.appendChild(tr);
             });
@@ -296,7 +296,7 @@
                     <td style="color:var(--accent-green);">${rep.email}</td>
                     <td><span style="background:rgba(239,68,68,0.15); color:var(--accent-red); padding:2px 6px; border-radius:3px;">${rep.status}</span></td>
                     <td>
-                        <button class="action-pill pill-on" onclick="resolveTicket(${idx})" style="padding:4px 8px;">SENT</button>
+                        <button class="action-pill pill-online" onclick="resolveTicket(${idx})" style="padding:4px 8px;">MARK SENT</button>
                     </td>
                 `;
                 inboxBody.appendChild(tr);
@@ -305,14 +305,9 @@
 
         function resolveTicket(index) {
             let reports = JSON.parse(localStorage.getItem('czc_admin_recovery_inbox') || '[]');
-            reports[index].status = 'RESOLVED';
+            reports[index].status = 'RESOLVED / EMAILED';
             localStorage.setItem('czc_admin_recovery_inbox', JSON.stringify(reports));
             renderAdminInbox();
-        }
-
-        function toggleSeller(index) {
-            sellers[index].active = !sellers[index].active;
-            renderSellers();
         }
 
         function toggleGlobalRegistration() {
@@ -320,11 +315,11 @@
             let btn = document.getElementById('global-reg-btn');
             let desc = document.getElementById('reg-status-desc');
             if(globalRegistrationActive) {
-                btn.className = "action-pill pill-on";
+                btn.className = "action-pill pill-online";
                 btn.innerText = "PORTAL ACTIVE (ON)";
                 desc.innerText = "Status: Accepting new partner vendor requests.";
             } else {
-                btn.className = "action-pill pill-off";
+                btn.className = "action-pill pill-offline";
                 btn.innerText = "PORTAL CLOSED (OFF)";
                 desc.innerText = "Status: Vendor registration portal is suspended.";
             }
