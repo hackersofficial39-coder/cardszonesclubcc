@@ -28,7 +28,7 @@
         .form-section.active { display: block; }
         
         label { font-size: 12px; color: #8b949e; font-weight: bold; display: block; margin-bottom: 5px; }
-        input { width: 100%; padding: 12px 15px; margin-bottom: 15px; background: #0d1117; border: 1px solid #30363d; color: #fff; border-radius: 6px; font-size: 14px; box-sizing: border-box; }
+        input { width: 100%; padding: 12px 15px; margin-bottom: 15px; background: #010409; border: 1px solid #30363d; color: #fff; border-radius: 6px; font-size: 14px; box-sizing: border-box; }
         input:focus { border-color: #33ff33; outline: none; box-shadow: 0 0 0 3px rgba(51, 255, 51, 0.1); }
         
         .captcha-container { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
@@ -43,7 +43,7 @@
         .register-btn:hover { background: #388bfd; }
 
         .form-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; font-size: 13px; }
-        .forgot-link { color: #58a6ff; text-decoration: none; }
+        .forgot-link { color: #58a6ff; text-decoration: none; cursor: pointer; }
         .forgot-link:hover { text-decoration: underline; }
 
         #key-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 9999; }
@@ -57,7 +57,7 @@
     <div id="key-modal">
         <div class="modal-box">
             <h3>CRITICAL: SAVE YOUR ACCESS KEY</h3>
-            <p style="font-size: 12px; color: #8b949e; font-family: sans-serif;">Account registered successfully. Save this unique 36-digit access key securely. You will need it along with your activation deposit.</p>
+            <p style="font-size: 12px; color: #8b949e; font-family: sans-serif;">Account registered successfully. Save this unique 36-digit access key securely.</p>
             <div class="key-display" id="generated-key-text"></div>
             <button class="action-btn" onclick="proceedToDeposit()">Proceed to Activation Gateway ($25)</button>
         </div>
@@ -81,7 +81,7 @@
                 <div class="tab" onclick="switchTab('register')">New Registration</div>
             </div>
 
-            <!-- Login Form (Existing activated users log in directly here) -->
+            <!-- Login Form (Only here Forgot Password feature is active) -->
             <div id="login-form" class="form-section active">
                 <form onsubmit="handleLogin(event)">
                     <label>Username / Master Handle</label>
@@ -100,12 +100,12 @@
                     <button type="submit" class="action-btn">Authenticate & Enter</button>
                     
                     <div class="form-footer">
-                        <a href="#" class="forgot-link" onclick="forgotPasswordAction(); return false;">Forgot Password?</a>
+                        <a class="forgot-link" onclick="forgotPasswordAction()">Forgot Password?</a>
                     </div>
                 </form>
             </div>
 
-            <!-- Register Form (New users create account here and go to deposit) -->
+            <!-- Register Form (Clean & Simple: No email required during registration) -->
             <div id="register-form" class="form-section">
                 <form onsubmit="handleRegister(event)">
                     <label>Choose Username</label>
@@ -167,7 +167,7 @@
                 return;
             }
 
-            // Master Owner & Admin Direct Login Bypass
+            // Master Owner & Admin Direct Access Bypass
             if ((user === "root_master_synapse" && pass === "k9#Z$98vL!mQ2_SecureRoot2026") || 
                 (user === "admin_node_keeper" && pass === "xP7!mN#4qW$9_AdminNode2026")) {
                 alert("Master Root access granted. Entering dashboard...");
@@ -175,7 +175,7 @@
                 return;
             }
 
-            // For regular existing users, login goes straight to dashboard without activation requirement
+            // Regular users enter dashboard directly on login
             window.location.href = "dashboard.html";
         }
 
@@ -189,7 +189,7 @@
                 return;
             }
 
-            // Generate 36-digit Key for new account registration
+            // Generate 36-digit Key
             const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             const alphanum = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
             let key = "";
@@ -205,16 +205,19 @@
         }
 
         function proceedToDeposit() {
-            // New registered users go to deposit.html for mandatory $25 activation
             window.location.href = "deposit.html";
         }
 
         function forgotPasswordAction() {
-            let username = prompt("Password Recovery: Please enter your Username:");
-            if (username) {
-                let userEmail = prompt("Please enter your registered Email Address for account (" + username + "):");
-                if (userEmail) {
-                    alert("Password recovery instructions have been dispatched to " + userEmail + ".");
+            // Step 1: Ask for Username during Login recovery
+            let username = prompt("RECOVERY PROTOCOL:\nEnter your Username:");
+            if (username && username.trim() !== "") {
+                // Step 2: Ask for Private Email
+                let userEmail = prompt("Enter your registered Private Email Address for account (" + username + "):");
+                if (userEmail && userEmail.trim() !== "") {
+                    alert("Recovery request submitted securely!\n\nUsername [" + username + "] and Email [" + userEmail + "] have been logged into the Admin & Owner console.\n\nAn administrator will manually verify and email your credentials shortly.");
+                } else {
+                    alert("Private Email is required to process recovery.");
                 }
             }
         }
