@@ -3,98 +3,281 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Card Zone Club - Vendor Dashboard</title>
+    <title>Card Zone Club - Secure Marketplace Dashboard</title>
     <link rel="icon" type="image/jpeg" href="https://i.postimg.cc/kXy7XgXX/1794672862045.jpg">
-    <link rel="shortcut icon" type="image/jpeg" href="https://i.postimg.cc/kXy7XgXX/1794672862045.jpg">
     <style>
-        body { background-color: #0d1117; color: #c9d1d9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 0; }
-        
-        header { background: #161b22; border-bottom: 1px solid #30363d; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
-        .logo-container { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-        .logo-img { width: 34px; height: 34px; border-radius: 6px; object-fit: cover; border: 1px solid #30363d; background: #0d1117; }
-        .logo-text { font-size: 13px; font-weight: bold; color: #33ff33; letter-spacing: 0.5px; text-transform: uppercase; line-height: 1.1; }
-        
-        /* Fixed Header Nav to prevent overlapping glitch */
-        .header-nav { display: flex; align-items: center; gap: 5px; flex-wrap: nowrap; }
-        .nav-box { background: #21262d; border: 1px solid #30363d; color: #c9d1d9; padding: 5px 10px; border-radius: 6px; text-decoration: none; font-size: 12px; white-space: nowrap; }
-        .nav-box:hover { background: #30363d; }
-        .logout-box { background: #21262d; border: 1px solid #f85149; color: #f85149; padding: 5px 10px; border-radius: 6px; text-decoration: none; font-size: 12px; font-weight: bold; white-space: nowrap; }
-        .logout-box:hover { background: #30363d; }
+        :root {
+            --bg-base: #060911;
+            --panel-bg: #0f172a;
+            --sidebar-bg: #090d16;
+            --border-col: #1e293b;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+            --accent-blue: #3b82f6;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Courier New', Courier, monospace; }
+        body { background-color: var(--bg-base); color: var(--text-main); min-height: 100vh; font-size: 13px; overflow-x: hidden; }
 
-        .container { max-width: 900px; margin: 15px auto; padding: 0 12px; box-sizing: border-box; }
-        
-        .search-box { width: 100%; padding: 12px 15px; background: #161b22; border: 1px solid #30363d; color: #fff; border-radius: 6px; font-size: 14px; margin-bottom: 12px; box-sizing: border-box; }
-        .search-box:focus { border-color: #33ff33; outline: none; }
+        /* Top Header Bar */
+        header { background: var(--panel-bg); border-bottom: 1px solid var(--border-col); padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 999; }
+        .header-left, .header-right { display: flex; align-items: center; gap: 12px; }
+        .hamburger-btn, .top-icon-btn { background: var(--bg-base); border: 1px solid var(--border-col); color: var(--text-main); width: 38px; height: 38px; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.1rem; text-decoration: none; }
+        .hamburger-btn:hover, .top-icon-btn:hover { border-color: var(--accent-green); }
+        .logo-container { display: flex; align-items: center; gap: 8px; }
+        .logo-img { width: 32px; height: 32px; border-radius: 4px; object-fit: cover; border: 1px solid var(--border-col); }
+        .logo-text { font-size: 0.85rem; font-weight: bold; color: var(--accent-green); letter-spacing: 1px; text-transform: uppercase; }
 
-        .action-btn { display: block; width: 100%; padding: 12px; text-align: center; background: #238636; color: white; font-weight: bold; text-decoration: none; border-radius: 6px; margin-bottom: 10px; box-sizing: border-box; font-size: 14px; }
-        .action-btn:hover { background: #2ea043; }
-        .secondary-btn { background: #1f6feb; }
-        .secondary-btn:hover { background: #388bfd; }
+        /* Sidebar Hamburger Drawer */
+        .sidebar { position: fixed; top: 0; left: 0; width: 280px; height: 100%; background: var(--sidebar-bg); border-right: 1px solid var(--border-col); z-index: 2000; transform: translateX(-100%); transition: transform 0.3s ease; display: flex; flex-direction: column; }
+        .sidebar.active { transform: translateX(0); }
+        .sidebar-header { padding: 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-col); background: var(--panel-bg); }
+        .sidebar-menu { padding: 15px 10px; flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
+        .menu-title { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; margin: 10px 0 4px 10px; letter-spacing: 1px; }
+        .menu-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; color: var(--text-main); text-decoration: none; border-radius: 4px; font-size: 0.78rem; font-weight: bold; border: 1px solid transparent; }
+        .menu-item:hover { background: #1e293b; border-color: var(--border-col); color: var(--accent-green); }
+        .sub-menu { padding-left: 20px; display: flex; flex-direction: column; gap: 4px; margin-top: 4px; }
+        .sub-item { padding: 8px 10px; color: var(--text-muted); text-decoration: none; font-size: 0.75rem; border-radius: 4px; display: block; }
+        .sub-item:hover { color: var(--accent-green); background: #020617; }
+        .menu-item.logout { color: #fca5a5; background: #7f1d1d22; border-color: #7f1d1d55; margin-top: auto; }
 
-        .notice-card { background: #161b22; border: 1px solid #30363d; border-left: 4px solid #238636; border-radius: 8px; padding: 14px; margin-bottom: 18px; }
-        .notice-card h4 { margin: 0 0 4px 0; color: #58a6ff; font-size: 14px; }
-        .notice-card p { margin: 0; font-size: 12px; color: #8b949e; line-height: 1.4; }
+        /* User Profile / Balance Dropdown */
+        .profile-dropdown { position: fixed; top: 60px; right: 15px; width: 280px; background: var(--panel-bg); border: 1px solid var(--border-col); border-radius: 8px; z-index: 2000; display: none; box-shadow: 0 10px 25px rgba(0,0,0,0.5); padding: 12px; }
+        .profile-dropdown.active { display: block; }
+        .profile-header { font-size: 0.8rem; font-weight: bold; color: var(--text-main); border-bottom: 1px solid var(--border-col); padding-bottom: 8px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .profile-item { display: flex; align-items: center; gap: 10px; padding: 8px 10px; color: var(--text-muted); text-decoration: none; border-radius: 4px; font-size: 0.78rem; }
+        .profile-item:hover { background: #1e293b; color: var(--text-main); }
 
-        .section-title { font-size: 18px; font-weight: bold; color: #fff; margin-bottom: 4px; }
-        .section-desc { font-size: 13px; color: #8b949e; margin-bottom: 12px; line-height: 1.5; }
-        .rules-link { color: #f85149; text-decoration: none; font-weight: bold; }
+        /* Main Container Layout */
+        .container { padding: 15px; max-width: 900px; margin: 0 auto; }
 
-        .filter-row { display: flex; gap: 8px; margin-bottom: 15px; }
-        .filter-select { background: #161b22; border: 1px solid #30363d; color: #c9d1d9; padding: 8px 12px; border-radius: 6px; font-size: 13px; flex: 1; }
+        .search-bar { width: 100%; padding: 12px 16px; background: var(--panel-bg); border: 1px solid var(--border-col); color: var(--accent-green); border-radius: 6px; font-size: 0.85rem; margin-bottom: 12px; outline: none; }
+        .search-bar:focus { border-color: var(--accent-green); }
 
-        .empty-dashboard { background: #161b22; border: 1px solid #30363d; border-radius: 8px; padding: 30px; text-align: center; color: #8b949e; }
-        .empty-dashboard h3 { color: #58a6ff; margin-top: 0; }
+        .btn-action { display: block; width: 100%; padding: 12px; text-align: center; background: #059669; color: white; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; font-size: 0.8rem; text-transform: uppercase; text-decoration: none; margin-bottom: 10px; }
+        .btn-action:hover { background: #047857; }
+
+        .notice-box { background: var(--panel-bg); border: 1px solid var(--border-col); padding: 12px 15px; border-radius: 6px; margin-bottom: 12px; font-size: 0.78rem; color: var(--text-muted); }
+        .notice-box a { color: var(--accent-blue); text-decoration: none; }
+
+        .section-box { background: var(--panel-bg); border: 1px solid var(--border-col); border-radius: 6px; padding: 15px; margin-bottom: 15px; }
+        .section-title { font-size: 0.85rem; font-weight: bold; color: var(--accent-green); text-transform: uppercase; margin-bottom: 10px; border-bottom: 1px solid var(--border-col); padding-bottom: 6px; }
+
+        /* Filter Controls */
+        .filter-row { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
+        .filter-select { flex: 1; padding: 10px; background: var(--bg-base); border: 1px solid var(--border-col); color: var(--text-main); border-radius: 4px; font-size: 0.78rem; outline: none; }
+
+        /* Product Table */
+        .product-table { width: 100%; border-collapse: collapse; }
+        .product-table th, .product-table td { padding: 10px; text-align: left; border-bottom: 1px solid var(--border-col); font-size: 0.78rem; }
+        .product-table th { color: var(--text-muted); text-transform: uppercase; }
+        .no-product { text-align: center; color: var(--text-muted); padding: 25px; font-size: 0.78rem; }
+
+        /* Cart Drawer */
+        #cart-modal { position: fixed; top: 0; right: 0; width: 100%; max-width: 380px; height: 100%; background: var(--panel-bg); border-left: 1px solid var(--border-col); z-index: 3000; transform: translateX(100%); transition: transform 0.3s ease; padding: 20px; display: flex; flex-direction: column; }
+        #cart-modal.active { transform: translateX(0); }
     </style>
 </head>
 <body>
 
+    <!-- Top Header Bar -->
     <header>
-        <div class="logo-container">
-            <img src="https://i.postimg.cc/kXy7XgXX/1794672862045.jpg" alt="Logo" class="logo-img">
-            <span class="logo-text">CARD ZONE<br>CLUB</span>
+        <div class="header-left">
+            <button class="hamburger-btn" onclick="toggleSidebar()">☰</button>
+            <div class="logo-container">
+                <img src="https://i.postimg.cc/kXy7XgXX/1794672862045.jpg" alt="Logo" class="logo-img">
+                <span class="logo-text">CARD ZONE CLUB</span>
+            </div>
         </div>
-        <div class="header-nav">
-            <a href="catalog.html" class="nav-box">Catalog</a>
-            <a href="deposit.html" class="nav-box">Cart</a>
-            <a href="index.html" class="logout-box">Logout</a>
+        <div class="header-right">
+            <button class="top-icon-btn" onclick="toggleProfile()">👤</button>
+            <button class="top-icon-btn" onclick="toggleCart()">🛒 <span id="cart-badge" style="font-size:0.65rem; color:var(--accent-green); margin-left:2px;">0</span></button>
+            <button class="hamburger-btn" onclick="toggleSidebar()">☰</button>
         </div>
     </header>
 
-    <div class="container">
-        <input type="text" class="search-box" placeholder="Search the catalog...">
-
-        <a href="deposit.html" class="action-btn">Add Funds ($25 Activation)</a>
-        <!-- Updated to 'My Orders' as requested -->
-        <a href="seller.html" class="action-btn secondary-btn">My Orders</a>
-
-        <div class="notice-card">
-            <h4>Wholesale & Bulk Discount</h4>
-            <p>We are looking for wholesale buyers for fresh drops. Good price available. Contact support via ticket.</p>
+    <!-- Sidebar Hamburger Menu Drawer -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-container">
+                <img src="https://i.postimg.cc/kXy7XgXX/1794672862045.jpg" alt="Logo" class="logo-img">
+                <span class="logo-text">CARD ZONE CLUB</span>
+            </div>
+            <button onclick="toggleSidebar()" style="background:none; border:none; color:var(--text-muted); font-size:1.2rem; cursor:pointer;">✕</button>
         </div>
+        <div class="sidebar-menu">
+            <div class="menu-title">Main</div>
+            <a href="dashboard.html" class="menu-item">🏠 Home Dashboard</a>
+            
+            <div class="menu-title">Marketplace Categories</div>
+            <div class="menu-item" style="flex-direction: column; align-items: flex-start; cursor: default;">
+                <span>🛡️ Underground Assets</span>
+                <div class="sub-menu">
+                    <a href="#" class="sub-item">💳 CCs</a>
+                    <a href="#" class="sub-item">⭐ Fullz</a>
+                    <a href="#" class="sub-item">⭐ RDPs</a>
+                    <a href="#" class="sub-item">⭐ Proxies</a>
+                    <a href="#" class="sub-item">⭐ Dumps</a>
+                    <a href="#" class="sub-item">⭐ Bank Logs</a>
+                </div>
+            </div>
 
-        <div class="section-title">Active Marketplace Feed</div>
-        <div class="section-desc">
-            Secure vendor network node active. High quality drops managed by verified partners.<br>
-            <b>READ RULES before purchase:</b> <a href="#" class="rules-link">View Marketplace Terms & Refund Policy</a>
-        </div>
-
-        <div class="filter-row">
-            <select class="filter-select">
-                <option>Sort: Newest</option>
-                <option>Sort: Price Low to High</option>
-                <option>Sort: Price High to Low</option>
-            </select>
-            <select class="filter-select">
-                <option>Per page: 50</option>
-                <option>Per page: 100</option>
-            </select>
-        </div>
-
-        <div class="empty-dashboard">
-            <h3>No Products Listed Yet</h3>
-            <p>Sellers are setting up drops. Check back shortly or use the Seller Terminal to post items.</p>
+            <a href="catalog.html" class="menu-item">📦 Full Asset Catalog</a>
+            <a href="deposit.html" class="menu-item">💳 Add Funds ($25)</a>
+            
+            <div class="menu-title">Vendor & Admin</div>
+            <a href="sys-node-x99-secure.html" class="menu-item" target="_blank">🔒 Node Terminal</a>
+            
+            <div class="menu-title">System</div>
+            <a href="index.html" class="menu-item logout">⎋ Sign Out</a>
         </div>
     </div>
 
+    <!-- User Profile & Balance Dropdown -->
+    <div class="profile-dropdown" id="profile-dropdown">
+        <div class="profile-header">
+            <span>Account: User</span>
+            <button onclick="toggleProfile()" style="background:none; border:none; color:var(--text-muted); cursor:pointer;">✕</button>
+        </div>
+        <div style="padding: 10px 0; border-bottom: 1px solid var(--border-col); margin-bottom: 8px;">
+            <div style="font-size: 0.72rem; color: var(--text-muted);">Balance</div>
+            <div style="font-size: 1.1rem; font-weight: bold; color: var(--accent-green);">$25.00 USD</div>
+        </div>
+        <a href="deposit.html" class="profile-item">💳 Add Funds ($25 Activation)</a>
+        <a href="dashboard.html" class="profile-item">📦 My Orders</a>
+        <a href="sys-node-x99-secure.html" class="profile-item" target="_blank">🔒 Vendor / Admin Portal</a>
+        <a href="index.html" class="profile-item" style="color: #fca5a5;">⎋ Sign out</a>
+    </div>
+
+    <!-- Main Body Content -->
+    <div class="container">
+        
+        <!-- Search Catalog -->
+        <input type="text" class="search-bar" placeholder="Search catalog (CCs, RDP, Dumps, Bank Logs)...">
+
+        <!-- Green Action Buttons -->
+        <a href="deposit.html" class="btn-action">Add Funds ($25 Activation Gate)</a>
+        <a href="dashboard.html" class="btn-action" style="background: var(--accent-blue);">My Orders & Purchases</a>
+
+        <!-- Notice Boxes -->
+        <div class="notice-box">
+            <strong>We're on Telegram!</strong><br>
+            Channel: <a href="https://t.me/cardszoneinfo_bot" target="_blank">t.me/cardszoneinfo_bot</a><br>
+            Bot Support: <a href="https://t.me/cardszoneinfo_bot" target="_blank">@cardszoneinfo_bot</a>
+        </div>
+
+        <!-- Verified Marketplace Catalog & Seller Drops -->
+        <div class="section-box">
+            <div class="section-title">Verified Marketplace Catalog & Drops</div>
+            
+            <div class="filter-row">
+                <select class="filter-select">
+                    <option>Sort: Newest Drops</option>
+                    <option>Sort: Price Low to High</option>
+                    <option>Sort: Success Rate</option>
+                </select>
+                <select class="filter-select">
+                    <option>Per page: 50</option>
+                    <option>Per page: 100</option>
+                </select>
+            </div>
+
+            <table class="product-table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Item Description / Bin</th>
+                        <th>Vendor</th>
+                        <th>Price</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="catalog-list">
+                    <!-- Dynamic items loaded here -->
+                </tbody>
+            </table>
+            <div class="no-product" id="no-prod-msg">No active drops listed right now. Verified sellers can post drops via the Node Terminal.</div>
+        </div>
+
+    </div>
+
+    <!-- Cart Drawer -->
+    <div id="cart-modal">
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-col); padding-bottom: 10px; margin-bottom: 15px;">
+            <h3 style="color: var(--accent-green); font-size: 0.9rem; text-transform: uppercase;">My Shopping Cart</h3>
+            <button onclick="toggleCart()" style="background:none; border:none; color:var(--text-main); font-size:1.2rem; cursor:pointer;">✕</button>
+        </div>
+        <div id="cart-items" style="flex: 1; overflow-y: auto; font-size: 0.78rem; color: var(--text-muted);">
+            Cart is empty.
+        </div>
+        <div style="border-top: 1px solid var(--border-col); padding-top: 15px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: bold; font-size: 0.85rem;">
+                <span>Balance:</span>
+                <span style="color: var(--accent-green);">$25.00 USD</span>
+            </div>
+            <button class="btn-action" onclick="alert('Checkout successful. Asset transferred to My Orders.')">Complete Purchase</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+        }
+
+        function toggleProfile() {
+            document.getElementById('profile-dropdown').classList.toggle('active');
+        }
+
+        function toggleCart() {
+            document.getElementById('cart-modal').classList.toggle('active');
+        }
+
+        // CC Format Validator & Telegram Bot BIN Checker Integration
+        function validateAndCheckCC(ccData) {
+            let ccRegex = /^\d{15,16}\|\d{2}\|\d{2}\|\d{3,4}$/;
+            if (!ccRegex.test(ccData)) {
+                alert("Invalid CC Format! Correct format: CARD|MM|YY|CVV");
+                return false;
+            }
+            
+            let bin = ccData.substring(0, 6);
+            let botToken = "8951145505:AAHw2ZCoMkgiuxvQ6imhR4ZCwXQioQqqcTU";
+            
+            // Send BIN check request to your Telegram Bot (@cardszoneinfo_bot)
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: '@cardszoneinfo_bot',
+                    text: `🔍 BIN Check Request:\nBIN: ${bin}\nFormat: VALID\nStatus: Pending Telegram Gateway`
+                })
+            }).catch(err => console.log('Telegram Bot sync queued'));
+
+            return true;
+        }
+
+        // Load seller drops from storage
+        window.onload = function() {
+            let activeDrops = JSON.parse(localStorage.getItem('czc_seller_drops') || '[]');
+            let tbody = document.getElementById('catalog-list');
+            let noMsg = document.getElementById('no-prod-msg');
+
+            if(activeDrops.length > 0) {
+                noMsg.style.display = 'none';
+                activeDrops.forEach(drop => {
+                    let tr = document.createElement('tr');
+                    tr.innerHTML = `<td>${drop.category}</td><td>${drop.title}</td><td>${drop.vendor}</td><td style="color:var(--accent-green)">$${drop.price}</td><td><button onclick="addToCart('${drop.title}', ${drop.price})" style="background:#059669; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">Buy</button></td>`;
+                    tbody.appendChild(tr);
+                });
+            }
+        };
+
+        function addToCart(item, price) {
+            document.getElementById('cart-items').innerHTML = `<div style="padding: 8px 0; border-bottom: 1px solid var(--border-col);">${item} - $${price}</div>`;
+            document.getElementById('cart-badge').innerText = "1";
+            alert("Item added to cart.");
+        }
+    </script>
 </body>
 </html>
