@@ -9,13 +9,12 @@
     <style>
         body { background-color: #0d1117; color: #c9d1d9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; }
         
-        /* Navigation / Brand Header */
         header { background: #161b22; border-bottom: 1px solid #30363d; padding: 12px 20px; display: flex; align-items: center; }
         .logo-container { display: flex; align-items: center; gap: 12px; }
         .logo-img { width: 38px; height: 38px; border-radius: 6px; object-fit: cover; border: 1px solid #30363d; background: #0d1117; }
         .logo-text { font-size: 16px; font-weight: bold; color: #33ff33; letter-spacing: 1px; text-transform: uppercase; }
 
-        /* Top Announcement Header Bar ($25 Deposit Notice) */
+        /* Top Announcement Header Bar - Clean Club Style */
         .top-announcement-bar { background: #1f6feb; color: #ffffff; padding: 10px 20px; text-align: center; font-size: 13px; font-weight: bold; border-bottom: 1px solid #388bfd; letter-spacing: 0.3px; }
 
         .main-content { flex: 1; display: flex; justify-content: center; align-items: center; padding: 20px; }
@@ -33,7 +32,6 @@
         input { width: 100%; padding: 12px 15px; margin-bottom: 15px; background: #0d1117; border: 1px solid #30363d; color: #fff; border-radius: 6px; font-size: 14px; box-sizing: border-box; }
         input:focus { border-color: #33ff33; outline: none; box-shadow: 0 0 0 3px rgba(51, 255, 51, 0.1); }
         
-        /* Captcha Box Styling */
         .captcha-container { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
         .captcha-box { background: #010409; border: 1px solid #30363d; color: #33ff33; padding: 10px 15px; font-family: monospace; font-size: 16px; font-weight: bold; letter-spacing: 3px; border-radius: 6px; user-select: none; text-align: center; flex: 1; }
         .refresh-captcha { background: #21262d; border: 1px solid #30363d; color: #c9d1d9; padding: 10px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; }
@@ -49,7 +47,7 @@
         .forgot-link { color: #58a6ff; text-decoration: none; }
         .forgot-link:hover { text-decoration: underline; }
 
-        /* Modal Overlay for 36-digit Key Display (Only for Registration) */
+        /* Modal Overlay for 36-digit Key Display (Registration) */
         #key-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 9999; }
         .modal-box { background: #161b22; border: 1px solid #33ff33; width: 90%; max-width: 450px; padding: 25px; border-radius: 8px; text-align: center; font-family: monospace; }
         .modal-box h3 { color: #33ff33; margin-top: 0; }
@@ -58,17 +56,16 @@
 </head>
 <body>
 
-    <!-- 36-Digit Generated Key Modal (Exclusive to Registration) -->
+    <!-- 36-Digit Generated Key Modal (Registration) -->
     <div id="key-modal">
         <div class="modal-box">
             <h3>CRITICAL: SAVE YOUR ACCESS KEY</h3>
-            <p style="font-size: 12px; color: #8b949e; font-family: sans-serif;">Account registered successfully. This unique 36-digit access key will not be shown again. Save it securely to log in.</p>
+            <p style="font-size: 12px; color: #8b949e; font-family: sans-serif;">Account registered successfully. Save this unique 36-digit access key securely. You will need it to log in.</p>
             <div class="key-display" id="generated-key-text"></div>
-            <button class="action-btn" onclick="proceedToDeposit()">Proceed to $25 Deposit Gateway</button>
+            <button class="action-btn" onclick="proceedToDeposit()">Proceed to Activation Gateway</button>
         </div>
     </div>
 
-    <!-- Main Header Bar -->
     <header>
         <div class="logo-container">
             <img src="https://i.postimg.cc/kXy7XgXX/1794672862045.jpg" alt="Logo" class="logo-img">
@@ -76,9 +73,9 @@
         </div>
     </header>
 
-    <!-- Top Announcement Header for $25 Deposit Requirement -->
+    <!-- Top Announcement Header Bar -->
     <div class="top-announcement-bar">
-        NOTICE: Account activation requires a mandatory minimum deposit of $25.00 USDT (TRC20).
+        New Account Activation: Minimum deposit is $25
     </div>
 
     <div class="main-content">
@@ -96,6 +93,9 @@
                     
                     <label>Password</label>
                     <input type="password" id="login-pass" placeholder="Enter your password" required>
+
+                    <label>36-Digit Access Key</label>
+                    <input type="text" id="login-access-key" placeholder="Enter your 36-digit access key" required>
                     
                     <label>Security Captcha</label>
                     <div class="captcha-container">
@@ -165,11 +165,19 @@
             e.preventDefault();
             let userCaptcha = document.getElementById('login-captcha-input').value.toUpperCase();
             let actualCaptcha = document.getElementById('login-captcha-code').innerText;
+            let accessKey = document.getElementById('login-access-key').value.trim();
+
             if (userCaptcha !== actualCaptcha) {
                 alert("Invalid Captcha! Please try again.");
                 generateCaptcha('login');
                 return;
             }
+
+            if (accessKey.length < 30) {
+                alert("Invalid Access Key! Please provide your full 36-digit access key received during registration.");
+                return;
+            }
+
             window.location.href = "dashboard.html";
         }
 
@@ -203,9 +211,12 @@
         }
 
         function forgotPasswordAction() {
-            let userEmail = prompt("Password Recovery: Please enter your registered email address to receive access credentials:");
-            if (userEmail) {
-                alert("If " + userEmail + " matches our records, recovery instructions have been sent via support.");
+            let username = prompt("Password Recovery: Please enter your Username:");
+            if (username) {
+                let userEmail = prompt("Please enter your registered Email Address for account (" + username + "):");
+                if (userEmail) {
+                    alert("Password recovery instructions and access key verification details have been sent to " + userEmail + ".");
+                }
             }
         }
     </script>
